@@ -14,22 +14,22 @@ class RegistrationTestCase(unittest.TestCase):
 
     def test_simple(self):
         path = os.path.join(self.root, 'locale')
-        translator = verboselib.register(domain='foo', locale_dir=path)
-        self.assertIsNotNone(translator)
+        translators = verboselib.register(domain='foo', locale_dir=path)
+        self.assertIsNotNone(translators)
 
     def test_multidomain(self):
         path = os.path.join(self.root, 'locale_extra')
-        translator = verboselib.register(['foo', 'bar', ], path)
-        self.assertIsNotNone(translator)
+        translators = verboselib.register(['foo', 'bar', ], path)
+        self.assertIsNotNone(translators)
 
     def test_register_many(self):
         path = os.path.join(self.root, 'locale')
         path_extra = os.path.join(self.root, 'locale_extra')
-        translator = verboselib.register_many(
+        translators = verboselib.register_many(
             {
                 'domain': 'foo',
                 'locale_dir': path,
             },
             (['foo', 'bar', ], path_extra),
         )
-        self.assertIsNotNone(translator)
+        self.assertIsNotNone(translators)

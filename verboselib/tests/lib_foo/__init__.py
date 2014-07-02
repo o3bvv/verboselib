@@ -5,6 +5,6 @@ from os import path
 
 
 here = path.abspath(path.dirname(__file__))
-translator = verboselib.register(
+translators = verboselib.register(
     domain='foo',
     locale_dir=path.join(here, 'locale'))

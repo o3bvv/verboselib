@@ -1,35 +1,81 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 import os
 import unittest
-import verboselib
+
+from verboselib.core import (
+    TranslationsFactory, use, drop, use_bypass, set_default_language,
+)
 
 
 here = os.path.abspath(os.path.dirname(__file__))
 
 
-class RegistrationTestCase(unittest.TestCase):
+class VerboselibTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.root = os.path.join(here, 'lib_foo')
+        set_default_language(None)
+        drop()
 
-    def test_simple(self):
-        path = os.path.join(self.root, 'locale')
-        translators = verboselib.register(domain='foo', locale_dir=path)
-        self.assertIsNotNone(translators)
+        path = os.path.join(here, 'locale')
+        self.translations = TranslationsFactory('tests', path)
 
-    def test_multidomain(self):
-        path = os.path.join(self.root, 'locale_extra')
-        translators = verboselib.register(['foo', 'bar', ], path)
-        self.assertIsNotNone(translators)
+    def tearDown(self):
+        del self.translations
 
-    def test_register_many(self):
-        path = os.path.join(self.root, 'locale')
-        path_extra = os.path.join(self.root, 'locale_extra')
-        translators = verboselib.register_many(
-            {
-                'domain': 'foo',
-                'locale_dir': path,
-            },
-            (['foo', 'bar', ], path_extra),
-        )
-        self.assertIsNotNone(translators)
+        set_default_language(None)
+        drop()
+
+    def test_bypass(self):
+        _ = self.translations.ugettext
+        source = "verboselib test string"
+
+        translated = _("verboselib test string")
+        self.assertEqual(translated, source)
+
+        use('en')
+        translated = _("verboselib test string")
+        self.assertNotEqual(translated, source)
+
+        use_bypass()
+        translated = _("verboselib test string")
+        self.assertEqual(translated, source)
+
+    def test_default_language(self):
+        _ = self.translations.ugettext
+
+        translated = _("verboselib test string")
+        self.assertEqual(translated, "verboselib test string")
+
+        set_default_language('ru')
+        translated = _("verboselib test string")
+        self.assertEqual(translated, "verboselib test string in ru")
+
+        set_default_language('uk')
+        translated = _("verboselib test string")
+        self.assertEqual(translated, "verboselib test string in uk")
+
+        set_default_language('en')
+        translated = _("verboselib test string")
+        self.assertEqual(translated, "verboselib test string in en_US")
+
+        set_default_language('en-gb')
+        translated = _("verboselib test string")
+        self.assertEqual(translated, "verboselib test string in en_GB")
+
+    def test_use_n_drop(self):
+        _ = self.translations.ugettext
+
+        translated = _("verboselib test string")
+        self.assertEqual(translated, "verboselib test string")
+
+        set_default_language('en')
+
+        use('ru')
+        translated = _("verboselib test string")
+        self.assertEqual(translated, "verboselib test string in ru")
+
+        drop()
+        translated = _("verboselib test string")
+        self.assertEqual(translated, "verboselib test string in en_US")

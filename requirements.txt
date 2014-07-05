@@ -3,3 +3,5 @@
 # using pip. Example::
 #
 #     pip install -r requirements.txt
+
+six==1.7.3

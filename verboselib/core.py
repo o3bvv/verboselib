@@ -7,8 +7,9 @@ from threading import local
 
 
 __all__ = (
-    'TranslationsFactory', 'set_default_language', 'to_locale', 'to_language',
-    'use', 'use_bypass', 'drop',
+    'set_default_language', 'to_locale', 'to_language',
+    'use_language', 'use_language_bypass', 'drop_language',
+    'TranslationsFactory',
 )
 
 BYPASS_VALUE = None
@@ -56,15 +57,15 @@ def to_language(locale):
         return locale.lower()
 
 
-def use(language):
+def use_language(language):
     _current_language.value = language
 
 
-def use_bypass():
-    use(BYPASS_VALUE)
+def use_language_bypass():
+    use_language(BYPASS_VALUE)
 
 
-def drop():
+def drop_language():
     """
     Deinstalls the currently active translation object so that further _ calls
     will resolve against the default translation object, again.
@@ -99,7 +100,7 @@ class VerboselibTranslation(gettext.GNUTranslations):
         return self.__to_language
 
     def __repr__(self):
-        return "<DjangoTranslation lang:%s>" % self.__language
+        return "<VerboselibTranslation lang:%s>" % self.__language
 
 
 class TranslationsFactory(object):

@@ -10,12 +10,9 @@ requirements = [
     r.strip() for r in open(os.path.join(here, 'requirements.txt')).readlines()
 ]
 
-version = __import__('verboselib').get_version()
-
-
 setup(
     name='verboselib',
-    version=version,
+    version='0.1.0',
     description='L10N support for stand-alone libraries',
     long_description=README,
     keywords='library l10n localization lazy string',

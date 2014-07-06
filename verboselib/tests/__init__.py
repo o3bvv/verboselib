@@ -4,8 +4,9 @@ from __future__ import unicode_literals
 import os
 import unittest
 
-from verboselib.core import (
-    TranslationsFactory, use, drop, use_bypass, set_default_language,
+from verboselib import (
+    use_language, use_language_bypass, drop_language,
+    set_default_language, TranslationsFactory,
 )
 
 
@@ -16,7 +17,7 @@ class VerboselibTestCase(unittest.TestCase):
 
     def setUp(self):
         set_default_language(None)
-        drop()
+        drop_language()
 
         path = os.path.join(here, 'locale')
         self.translations = TranslationsFactory('tests', path)
@@ -25,7 +26,7 @@ class VerboselibTestCase(unittest.TestCase):
         del self.translations
 
         set_default_language(None)
-        drop()
+        drop_language()
 
     def test_bypass(self):
         _ = self.translations.ugettext
@@ -34,11 +35,11 @@ class VerboselibTestCase(unittest.TestCase):
         translated = _("verboselib test string")
         self.assertEqual(translated, source)
 
-        use('en')
+        use_language('en')
         translated = _("verboselib test string")
         self.assertNotEqual(translated, source)
 
-        use_bypass()
+        use_language_bypass()
         translated = _("verboselib test string")
         self.assertEqual(translated, source)
 
@@ -64,7 +65,7 @@ class VerboselibTestCase(unittest.TestCase):
         translated = _("verboselib test string")
         self.assertEqual(translated, "verboselib test string in en_GB")
 
-    def test_use_n_drop(self):
+    def test_use_n_drop_language(self):
         _ = self.translations.ugettext
 
         translated = _("verboselib test string")
@@ -72,10 +73,10 @@ class VerboselibTestCase(unittest.TestCase):
 
         set_default_language('en')
 
-        use('ru')
+        use_language('ru')
         translated = _("verboselib test string")
         self.assertEqual(translated, "verboselib test string in ru")
 
-        drop()
+        drop_language()
         translated = _("verboselib test string")
         self.assertEqual(translated, "verboselib test string in en_US")

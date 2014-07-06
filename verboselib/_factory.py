@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import gettext
-import six
 
 from copy import copy
 
@@ -79,6 +78,7 @@ class TranslationsFactory(object):
         return self._get_translation().gettext(message)
 
     def ugettext(self, message):
+        import six
         if six.PY3:
             return self.gettext(message)
         else:

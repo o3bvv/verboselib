@@ -7,3 +7,4 @@ def get_version():
 
 
 from ._core import *
+from ._factory import *

@@ -6,8 +6,8 @@ import unittest
 
 from verboselib import (
     use_language, use_language_bypass, drop_language, set_default_language,
+    TranslationsFactory,
 )
-from verboselib.factory import TranslationsFactory
 
 
 here = os.path.abspath(os.path.dirname(__file__))

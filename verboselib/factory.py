@@ -5,6 +5,8 @@ import six
 from copy import copy
 
 from verboselib import _core, to_language, to_locale
+from ._lazy import LazyString
+
 
 __all__ = (
     'TranslationsFactory',
@@ -81,3 +83,9 @@ class TranslationsFactory(object):
             return self.gettext(message)
         else:
             return self._get_translation().ugettext(message)
+
+    def gettext_lazy(self, message):
+        return LazyString(lambda: self.gettext(message))
+
+    def ugettext_lazy(self, message):
+        return LazyString(lambda: self.ugettext(message))

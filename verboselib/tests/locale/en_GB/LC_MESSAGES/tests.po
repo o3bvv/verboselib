@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-05 18:51+0300\n"
+"POT-Creation-Date: 2014-07-06 13:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: __init__.py:26
+#: __init__.py:35 __init__.py:39 __init__.py:43 __init__.py:49 __init__.py:53
+#: __init__.py:57 __init__.py:61 __init__.py:65 __init__.py:71 __init__.py:77
+#: __init__.py:81 __init__.py:88
 msgid "verboselib test string"
 msgstr "verboselib test string in en_GB"
+
+#: __init__.py:97
+msgid "Good morning, {:}!"
+msgstr ""

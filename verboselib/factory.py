@@ -69,6 +69,7 @@ class TranslationsFactory(object):
             languages=[locale, ],
             class_=VerboselibTranslation,
             fallback=True)
+        t.set_language(language)
         self._translations[language] = t
         return t
 

@@ -7,7 +7,6 @@ install:
     - pip install -e . --use-mirrors
     - pip install nose coverage coveralls --use-mirrors
 script:
-    - for lang in {ru,uk,en_US,en_GB}; do cd verboselib/tests/locale/$lang/LC_MESSAGES; msgfmt -o tests.mo tests.po; cd - > /dev/null; done
     - coverage run `which nosetests` --nocapture
     - coverage report -m
 after_success:

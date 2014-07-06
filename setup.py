@@ -9,10 +9,11 @@ README = open(os.path.join(here, 'README.rst')).read()
 requirements = [
     r.strip() for r in open(os.path.join(here, 'requirements.txt')).readlines()
 ]
+version = __import__('verboselib').get_version()
 
 setup(
     name='verboselib',
-    version='0.1.0',
+    version=version,
     description='L10N support for stand-alone libraries',
     long_description=README,
     keywords='library l10n localization lazy string',

@@ -2,7 +2,7 @@
 VERSION = (0, 1, 0)
 
 
-def get_version():
+def get_version():  # pragma: no cover
     return '.'.join(str(x) for x in VERSION)
 
 

@@ -24,7 +24,7 @@ def to_locale(language, to_lower=False):
     Turns a language name (en-us) into a locale name (en_US). If 'to_lower' is
     True, the last component is lower-cased (en_us).
 
-    Credits: https://github.com/django/django/blob/9618d68b345fe69c787f8426b07e920e647e05f3/django/utils/translation/trans_real.py#L75-L90
+    Credits: http://bit.ly/1ssrxqE
     """
     p = language.find('-')
     if p >= 0:
@@ -44,7 +44,7 @@ def to_language(locale):
     """
     Turns a locale name (en_US) into a language name (en-us).
 
-    Credits: https://github.com/django/django/blob/9618d68b345fe69c787f8426b07e920e647e05f3/django/utils/translation/trans_real.py#L93-L99
+    Credits: http://bit.ly/1vWACbE
     """
     p = locale.find('_')
     if p >= 0:

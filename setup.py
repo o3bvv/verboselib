@@ -16,7 +16,9 @@ setup(
     version=version,
     description='L10N support for stand-alone libraries',
     long_description=README,
-    keywords='library l10n localization lazy string',
+    keywords=[
+        'library', 'l10n', 'localization', 'lazy', 'string',
+    ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',

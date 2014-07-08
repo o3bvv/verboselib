@@ -2,9 +2,10 @@
 import gettext
 
 from copy import copy
+from stringlike.lazy import LazyString
 
 from verboselib import _core, to_language, to_locale
-from ._lazy import LazyString
+from verboselib._compatibility import PY3
 
 
 __all__ = (
@@ -17,7 +18,7 @@ class VerboselibTranslation(gettext.GNUTranslations):
     This class sets up the GNUTranslations context with regard to output
     charset.
 
-    Credits: https://github.com/django/django/blob/cb9704fc4ff0d0091814c59bc3bed90e9728cb16/django/utils/translation/trans_real.py#L100-L124
+    Credits: http://bit.ly/1xME37A
     """
     def __init__(self, *args, **kwargs):
         gettext.GNUTranslations.__init__(self, *args, **kwargs)
@@ -78,8 +79,7 @@ class TranslationsFactory(object):
         return self._get_translation().gettext(message)
 
     def ugettext(self, message):
-        import six
-        if six.PY3:
+        if PY3:
             return self.gettext(message)
         else:
             return self._get_translation().ugettext(message)

@@ -8,3 +8,4 @@ def get_version():  # pragma: no cover
 
 from ._core import *
 from ._factory import *
+from ._helpers import *

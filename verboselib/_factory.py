@@ -4,8 +4,9 @@ import gettext
 from copy import copy
 from stringlike.lazy import LazyString
 
-from verboselib import _core, to_language, to_locale
-from verboselib._compatibility import PY3
+from . import _core
+from ._compatibility import PY3
+from ._helpers import to_language, to_locale
 
 
 __all__ = (

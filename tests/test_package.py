@@ -13,7 +13,7 @@ from verboselib import (
 here = os.path.abspath(os.path.dirname(__file__))
 
 
-class VerboselibTestCase(unittest.TestCase):
+class PackageTestCase(unittest.TestCase):
 
     def setUp(self):
         set_default_language(None)

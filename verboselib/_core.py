@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-
 from threading import local
 
 
 __all__ = (
-    'set_default_language', 'to_locale', 'to_language',
+    'set_default_language',
     'use_language', 'use_language_bypass', 'drop_language',
 )
 
@@ -17,40 +16,6 @@ _current_language = local()
 def set_default_language(language=None):
     global _default_language
     _default_language = language
-
-
-def to_locale(language, to_lower=False):
-    """
-    Turns a language name (en-us) into a locale name (en_US). If 'to_lower' is
-    True, the last component is lower-cased (en_us).
-
-    Credits: http://bit.ly/1ssrxqE
-    """
-    p = language.find('-')
-    if p >= 0:
-        if to_lower:
-            return language[:p].lower() + '_' + language[p + 1:].lower()
-        else:
-            # Get correct locale for sr-latn
-            if len(language[p + 1:]) > 2:
-                locale = language[:p].lower() + '_' + language[p + 1].upper()
-                return locale + language[p + 2:].lower()
-            return language[:p].lower() + '_' + language[p + 1:].upper()
-    else:
-        return language.lower()
-
-
-def to_language(locale):
-    """
-    Turns a locale name (en_US) into a language name (en-us).
-
-    Credits: http://bit.ly/1vWACbE
-    """
-    p = locale.find('_')
-    if p >= 0:
-        return locale[:p].lower() + '-' + locale[p + 1:].lower()
-    else:
-        return locale.lower()
 
 
 def use_language(language):

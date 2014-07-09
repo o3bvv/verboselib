@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from verboselib._helpers import to_language, to_locale
+from verboselib.helpers import to_language, to_locale
 
 
 class HelpersTestCase(unittest.TestCase):

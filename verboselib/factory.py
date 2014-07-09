@@ -6,7 +6,7 @@ from stringlike.lazy import LazyString
 
 from . import _core
 from ._compatibility import PY3
-from ._helpers import to_language, to_locale
+from .helpers import to_language, to_locale
 
 
 __all__ = (

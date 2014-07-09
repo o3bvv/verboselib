@@ -6,14 +6,17 @@ from setuptools import setup
 here = os.path.abspath(os.path.dirname(__file__))
 
 README = open(os.path.join(here, 'README.rst')).read()
+
+name = 'verboselib'
 requirements = [
     r.strip() for r in open(os.path.join(here, 'requirements.txt')).readlines()
 ]
-version = __import__('verboselib').get_version()
+
+exec(open(os.path.join(here, name, 'version.py')).read())
 
 setup(
-    name='verboselib',
-    version=version,
+    name=name,
+    version=__version__,
     description='L10N support for stand-alone libraries',
     long_description=README,
     keywords=[

@@ -9,6 +9,7 @@ from verboselib import (
     use_language, use_language_bypass, drop_language, set_default_language,
 )
 from verboselib.factory import TranslationsFactory, VerboselibTranslation
+from verboselib._compatibility import PY3
 
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -105,6 +106,9 @@ class PackageTestCase(unittest.TestCase):
 
 class VerboselibTranslationTestCase(unittest.TestCase):
 
+    def setUp(self):
+        self.method_name = 'gettext' if PY3 else 'ugettext'
+
     def test_merge(self):
 
         def _translation(domain):
@@ -114,13 +118,15 @@ class VerboselibTranslationTestCase(unittest.TestCase):
             return t
 
         t1 = _translation("tests")
-        self.assertEqual(t1.ugettext("Hello"), "Вітаю")
-        self.assertEqual(t1.ugettext("Good bye"), "Good bye")
+        method1 = getattr(t1, self.method_name)
+        self.assertEqual(method1("Hello"), "Вітаю")
+        self.assertEqual(method1("Good bye"), "Good bye")
 
         t2 = _translation("extra")
-        self.assertEqual(t2.ugettext("Hello"), "Hello")
-        self.assertEqual(t2.ugettext("Good bye"), "До зустрічі")
+        method2 = getattr(t2, self.method_name)
+        self.assertEqual(method2("Hello"), "Hello")
+        self.assertEqual(method2("Good bye"), "До зустрічі")
 
         t1.merge(t2)
-        self.assertEqual(t1.ugettext("Hello"), "Вітаю")
-        self.assertEqual(t1.ugettext("Good bye"), "До зустрічі")
+        self.assertEqual(method1("Hello"), "Вітаю")
+        self.assertEqual(method1("Good bye"), "До зустрічі")

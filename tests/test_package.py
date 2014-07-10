@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import gettext
 import os
 import unittest
 
 from verboselib import (
     use_language, use_language_bypass, drop_language, set_default_language,
 )
-from verboselib.factory import TranslationsFactory
+from verboselib.factory import TranslationsFactory, VerboselibTranslation
 
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -19,8 +20,8 @@ class PackageTestCase(unittest.TestCase):
         set_default_language(None)
         drop_language()
 
-        path = os.path.join(here, 'locale')
-        self.translations = TranslationsFactory('tests', path)
+        path = os.path.join(here, "locale")
+        self.translations = TranslationsFactory("tests", path)
 
     def tearDown(self):
         del self.translations
@@ -100,3 +101,26 @@ class PackageTestCase(unittest.TestCase):
         self.assertEqual(translated.format("Иван"), "Доброе утро, Иван!")
         use_language('uk')
         self.assertEqual(translated.format("Іван"), "Доброго ранку, Іван!")
+
+
+class VerboselibTranslationTestCase(unittest.TestCase):
+
+    def test_merge(self):
+
+        def _translation(domain):
+            path = os.path.join(here, "locale")
+            t = gettext.translation(domain, path, ['uk'], VerboselibTranslation)
+            t.set_language('uk')
+            return t
+
+        t1 = _translation("tests")
+        self.assertEqual(t1.ugettext("Hello"), "Вітаю")
+        self.assertEqual(t1.ugettext("Good bye"), "Good bye")
+
+        t2 = _translation("extra")
+        self.assertEqual(t2.ugettext("Hello"), "Hello")
+        self.assertEqual(t2.ugettext("Good bye"), "До зустрічі")
+
+        t1.merge(t2)
+        self.assertEqual(t1.ugettext("Hello"), "Вітаю")
+        self.assertEqual(t2.ugettext("Good bye"), "До зустрічі")

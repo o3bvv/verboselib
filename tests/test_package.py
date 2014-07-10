@@ -9,7 +9,7 @@ from verboselib import (
     use_language, use_language_bypass, drop_language, set_default_language,
 )
 from verboselib.factory import TranslationsFactory, VerboselibTranslation
-from verboselib._compatibility import PY3
+from verboselib._compatibility import PY2, PY3
 
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -68,26 +68,35 @@ class PackageTestCase(unittest.TestCase):
         self.assertEqual(translated, "verboselib test string in en_GB")
 
     def test_use_n_drop_language(self):
-        _ = self.translations.ugettext
+        _ = self.translations.gettext
+        U_ = self.translations.ugettext
 
         translated = _("verboselib test string")
+        self.assertEqual(translated, "verboselib test string")
+
+        translated = U_("verboselib test string")
         self.assertEqual(translated, "verboselib test string")
 
         set_default_language('en')
 
         use_language('ru')
-        translated = _("verboselib test string")
+        translated = U_("verboselib test string")
         self.assertEqual(translated, "verboselib test string in ru")
 
         drop_language()
-        translated = _("verboselib test string")
+        translated = U_("verboselib test string")
         self.assertEqual(translated, "verboselib test string in en_US")
 
     def test_lazy(self):
-        L_ = self.translations.ugettext_lazy
+        L_ = self.translations.gettext_lazy
+        UL_ = self.translations.ugettext_lazy
 
         use_language('uk')
-        translated = L_("verboselib test string")
+
+        if PY2:
+            self.assertEqual(str(L_("Hello")), "Вітаю".encode('utf-8'))
+
+        translated = UL_("verboselib test string")
 
         use_language('ru')
         self.assertEqual(translated, "verboselib test string in ru")
@@ -96,7 +105,7 @@ class PackageTestCase(unittest.TestCase):
         use_language_bypass()
         self.assertEqual(translated, "verboselib test string")
 
-        translated = L_("Good morning, {:}!")
+        translated = UL_("Good morning, {:}!")
         use_language('ru')
 
         self.assertEqual(translated.format("Иван"), "Доброе утро, Иван!")
@@ -108,12 +117,13 @@ class VerboselibTranslationTestCase(unittest.TestCase):
 
     def setUp(self):
         self.method_name = 'gettext' if PY3 else 'ugettext'
+        self.path = os.path.join(here, "locale")
 
     def test_merge(self):
 
         def _translation(domain):
-            path = os.path.join(here, "locale")
-            t = gettext.translation(domain, path, ['uk'], VerboselibTranslation)
+            class_ = VerboselibTranslation
+            t = gettext.translation(domain, self.path, ['uk'], class_)
             t.set_language('uk')
             return t
 
@@ -130,3 +140,21 @@ class VerboselibTranslationTestCase(unittest.TestCase):
         t1.merge(t2)
         self.assertEqual(method1("Hello"), "Вітаю")
         self.assertEqual(method1("Good bye"), "До зустрічі")
+
+    def test_language(self):
+        class_ = VerboselibTranslation
+        t = gettext.translation('tests', self.path, ['en_US'], class_)
+        t.set_language('en_US')
+        self.assertEqual(t.language(), 'en_US')
+
+    def test_to_language(self):
+        class_ = VerboselibTranslation
+        t = gettext.translation('tests', self.path, ['en_US'], class_)
+        t.set_language('en_US')
+        self.assertEqual(t.to_language(), 'en-us')
+
+    def test_repr(self):
+        class_ = VerboselibTranslation
+        t = gettext.translation('tests', self.path, ['en_US'], class_)
+        t.set_language('en_US')
+        self.assertEqual(repr(t), '<VerboselibTranslation lang:en_US>')

@@ -2,10 +2,10 @@
 import gettext
 
 from copy import copy
-from stringlike.lazy import LazyString
 
 from . import _core
 from ._compatibility import PY3
+from ._lazy import LazyString, LazyUnicode
 from .helpers import to_language, to_locale
 
 
@@ -80,13 +80,11 @@ class TranslationsFactory(object):
         return self._get_translation().gettext(message)
 
     def ugettext(self, message):
-        if PY3:
-            return self.gettext(message)
-        else:
-            return self._get_translation().ugettext(message)
+        method = self.gettext if PY3 else self._get_translation().ugettext
+        return method(message)
 
     def gettext_lazy(self, message):
         return LazyString(lambda: self.gettext(message))
 
     def ugettext_lazy(self, message):
-        return LazyString(lambda: self.ugettext(message))
+        return LazyUnicode(lambda: self.ugettext(message))

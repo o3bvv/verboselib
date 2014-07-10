@@ -123,4 +123,4 @@ class VerboselibTranslationTestCase(unittest.TestCase):
 
         t1.merge(t2)
         self.assertEqual(t1.ugettext("Hello"), "Вітаю")
-        self.assertEqual(t2.ugettext("Good bye"), "До зустрічі")
+        self.assertEqual(t1.ugettext("Good bye"), "До зустрічі")

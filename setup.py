@@ -20,18 +20,21 @@ setup(
     description='L10N support for stand-alone libraries',
     long_description=README,
     keywords=[
-        'library', 'l10n', 'localization', 'lazy', 'string',
+        'library', 'l10n', 'localization', 'lazy', 'string', 'framework',
     ],
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
         'Natural Language :: English',
         'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
-        'Topic :: Software Development :: Libraries',
+        'Topic :: Software Development :: Libraries :: Application Frameworks',
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     url='https://github.com/oblalex/verboselib',
     author='Alexander Oblovatniy',
@@ -39,6 +42,9 @@ setup(
     license='LGPLv3',
     packages=[
         'verboselib',
+    ],
+    scripts=[
+        'verboselib/bin/verboselib-manage.py'
     ],
     include_package_data=True,
     install_requires=requirements,

@@ -4,8 +4,6 @@ python:
     - "3.2"
     - "3.3"
 install:
-    - ls -la
-    - pwd
     - pip install -e . --use-mirrors
     - pip install nose coverage coveralls --use-mirrors
 script:

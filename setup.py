@@ -17,7 +17,7 @@ exec(open(os.path.join(here, name, 'version.py')).read())
 setup(
     name=name,
     version=__version__,
-    description='L10N support for stand-alone libraries',
+    description='A little L10N framework for libraries and applications',
     long_description=README,
     keywords=[
         'library', 'l10n', 'localization', 'lazy', 'string', 'framework',

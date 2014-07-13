@@ -3,7 +3,7 @@ verboselib
 
 |Build Status| |Coverage Status| |PyPi package| |PyPi downloads|
 
-Python library for l10n of libraries.
+A little L10N framework for Python libraries and applications.
 
 .. |Build Status| image:: http://img.shields.io/travis/oblalex/verboselib.svg?style=flat&branch=master
    :target: https://travis-ci.org/oblalex/verboselib

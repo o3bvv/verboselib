@@ -1,8 +1,9 @@
 [run]
 source = verboselib
-omit = */tests/*
-omit = verboselib/bin/*
-omit = verboselib/management/*
+omit =
+    */tests/*
+    verboselib/bin/*
+    verboselib/management/*
 
 [report]
 exclude_lines =

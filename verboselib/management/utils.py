@@ -4,7 +4,7 @@ import sys
 
 from subprocess import PIPE, Popen
 
-from verboselib._compatibility import reraise, string_types, text_type
+from verboselib._compatibility import string_types, text_type
 
 
 def find_command(cmd, path=None, pathext=None):
@@ -81,14 +81,15 @@ def popen_wrapper(args):
     Returns stdout output, stderr output and OS status code.
     """
     try:
-        p = Popen(args, shell=False, stdout=PIPE, stderr=PIPE,
-                close_fds=os.name != 'nt', universal_newlines=True)
+        p = Popen(args,
+                  shell=False,
+                  stdout=PIPE,
+                  stderr=PIPE,
+                  close_fds=os.name != 'nt',
+                  universal_newlines=True)
     except OSError as e:
-        error_class = RuntimeError
-        error = error_class(
-            'Error executing %s: %s' % (args[0], e.strerror))
-
-        reraise(error_class, error, sys.exc_info()[2])
+        raise OSError(
+            "Error executing '{:}': '{:}'".format(args[0], e.strerror))
     output, errors = p.communicate()
     return (
         output,

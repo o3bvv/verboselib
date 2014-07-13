@@ -281,12 +281,12 @@ class Command(object):
                 if is_ignored(path, normalized_patterns):
                     dir_names.remove(dir_name)
                     if self.verbose:
-                        print_out("Ignoring directory '%s'" % dir_name)
+                        print_out("Ignoring directory '{:}'".format(dir_name))
             for file_name in file_names:
                 path = os.path.normpath(os.path.join(dir_path, file_name))
                 if is_ignored(path, self.ignore_patterns):
                     if self.verbose:
-                        print_out("Ignoring file '%s' in '%s'".format(
+                        print_out("Ignoring file '{:}' in '{:}'".format(
                                   file_name, dir_path))
                 else:
                     all_files.append((dir_path, file_name))
@@ -297,7 +297,7 @@ class Command(object):
         if not (file_ext == '.py' or file_ext in self.extensions):
             return
         if self.verbose:
-            print_out("Processing file '%s' in '%s'".format(
+            print_out("Processing file '{:}' in '{:}'".format(
                       file_name, dir_path))
         file_path = os.path.join(dir_path, file_name)
 
@@ -331,8 +331,7 @@ class Command(object):
                 print_err("Errors happened while running xgettext on {:}:\n{:}"
                           .format(file_name, errors))
                 sys.exit(status)
-            else:
-                # Print warnings
+            else:  # Print warnings
                 print_out(errors)
         if msgs:
             if os.path.exists(potfile):
@@ -350,60 +349,68 @@ class Command(object):
 
         Uses mguniq, msgmerge, and msgattrib GNU gettext utilities.
         """
+        pofile = self._get_po_path(potfile, locale)
+
+        msgs = self._get_unique_messages(potfile)
+        msgs = self._merge_messages(potfile, pofile, msgs)
+        msgs = self._strip_package_version(msgs)
+
+        with open(pofile, 'w') as fp:
+            fp.write(msgs)
+
+        self._remove_obsolete_messages(pofile)
+
+    def _get_unique_messages(self, potfile):
         args = ['msguniq', '--to-code=utf-8']
+        self._ensure_messages_extra_args(args)
+        args.append(potfile)
+        return self._get_messages_from_command(args)
+
+    def _get_po_path(self, potfile, locale):
+        basedir = os.path.join(os.path.dirname(potfile), locale, 'LC_MESSAGES')
+        if not os.path.isdir(basedir):
+            os.makedirs(basedir)
+        return os.path.join(basedir, '%s.po' % str(self.domain))
+
+    def _merge_messages(self, potfile, pofile, msgs):
+        if not os.path.exists(pofile):
+            return msgs
+
+        with open(potfile, 'w') as fp:
+            fp.write(msgs)
+
+        args = ['msgmerge', '-q']
+        self._ensure_messages_extra_args(args)
+        args.extend([pofile, potfile])
+
+        return self._get_messages_from_command(args)
+
+    def _strip_package_version(self, msgs):
+        return msgs.replace(
+            "#. #-#-#-#-#  %s.pot (PACKAGE VERSION)  #-#-#-#-#\n" % self.domain,
+            "")
+
+    def _remove_obsolete_messages(self, pofile):
+        if not self.no_obsolete:
+            return
+        args = ['msgattrib', '-o', pofile, '--no-obsolete']
+        self._ensure_messages_extra_args(args)
+        args.append(pofile)
+        self._get_messages_from_command(args)
+
+    def _ensure_messages_extra_args(self, args):
         if self.wrap:
             args.append(self.wrap)
         if self.no_location:
             args.append(self.no_location)
-        args.append(potfile)
 
+    def _get_messages_from_command(self, args):
         msgs, errors, status = popen_wrapper(args)
         if errors:
             if status != STATUS_OK:
                 raise RuntimeError(
-                    "Errors happened while running msguniq\n:%s" % errors)
+                    "Errors happened while running {:}\n:{:}"
+                    .format(args[0], errors))
             else:  # Print warnings
                 print_out(errors)
-
-        basedir = os.path.join(os.path.dirname(potfile), locale, 'LC_MESSAGES')
-        if not os.path.isdir(basedir):
-            os.makedirs(basedir)
-        pofile = os.path.join(basedir, '%s.po' % str(self.domain))
-
-        if os.path.exists(pofile):
-            with open(potfile, 'w') as fp:
-                fp.write(msgs)
-            args = ['msgmerge', '-q']
-            if self.wrap:
-                args.append(self.wrap)
-            if self.no_location:
-                args.append(self.no_location)
-            args.extend([pofile, potfile])
-            msgs, errors, status = popen_wrapper(args)
-            if errors:
-                if status != STATUS_OK:
-                    raise RuntimeError(
-                        "Errors happened while running msgmerge\n:%s" % errors)
-                else:  # Print warnings
-                    print_out(errors)
-
-        msgs = msgs.replace(
-            "#. #-#-#-#-#  %s.pot (PACKAGE VERSION)  #-#-#-#-#\n" % self.domain,
-            "")
-        with open(pofile, 'w') as fp:
-            fp.write(msgs)
-
-        if self.no_obsolete:
-            args = ['msgattrib', '-o', pofile, '--no-obsolete']
-            if self.wrap:
-                args.append(self.wrap)
-            if self.no_location:
-                args.append(self.location)
-            args.append(pofile)
-            msgs, errors, status = popen_wrapper(args)
-            if errors:
-                if status != STATUS_OK:
-                    raise RuntimeError(
-                        "Errors happened while running msgattrib\n:%s" % errors)
-                else:  # Print warnings
-                    print_out(errors)
+        return msgs

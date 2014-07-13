@@ -19,7 +19,7 @@ class VerboselibTranslation(gettext.GNUTranslations):
     This class sets up the GNUTranslations context with regard to output
     charset.
 
-    Credits: http://bit.ly/1xME37A
+    Taken `from Django <http://bit.ly/1xME37A>`_.
     """
     def __init__(self, *args, **kwargs):
         gettext.GNUTranslations.__init__(self, *args, **kwargs)

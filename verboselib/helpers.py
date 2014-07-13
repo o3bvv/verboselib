@@ -10,7 +10,7 @@ def to_locale(language, to_lower=False):
     Turns a language name (en-us) into a locale name (en_US). If 'to_lower' is
     True, the last component is lower-cased (en_us).
 
-    Credits: http://bit.ly/1ssrxqE
+    Taken `from Django <http://bit.ly/1ssrxqE>`_.
     """
     p = language.find('-')
     if p >= 0:
@@ -30,7 +30,7 @@ def to_language(locale):
     """
     Turns a locale name (en_US) into a language name (en-us).
 
-    Credits: http://bit.ly/1vWACbE
+    Taken `from Django <http://bit.ly/1vWACbE>`_.
     """
     p = locale.find('_')
     if p >= 0:

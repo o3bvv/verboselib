@@ -2,17 +2,19 @@
 """
 List available commands or show help for a particular command.
 """
-from verboselib.management import get_commands, print_out, print_err
+from verboselib.management import get_commands
+from verboselib.management.utils import print_out, print_err
 
-__usage__ = 'help [<command>]'
+
+__usage__ = 'help [COMMAND]'
 
 
-def execute(args=None):
+def execute(prog_name, args=None):
     if args:
         command = args[0]
         commands = get_commands()
         if command in commands:
-            print_module_help(commands[command])
+            _print_module_help(commands[command])
         else:
             print_err("Unknown command '{:}'.".format(command))
             _list_commands()
@@ -20,23 +22,24 @@ def execute(args=None):
         _list_commands()
 
 
-def print_module_help(module):
-    messages = []
-
-    usage = getattr(module, '__usage__', None)
-    if usage:
-        messages.append("Usage:")
-        messages.append(usage.strip())
-        messages.append("")
-
-    description = _description(module)
-    if description:
-        messages.append("Description:")
-        messages.append(_description(module))
+def _print_module_help(module):
+    message = getattr(module, '__help__', None)
+    if message:
+        print_out(message)
     else:
-        messages.append("No description.")
+        messages = []
+        usage = getattr(module, '__usage__', None)
+        if usage:
+            messages.append("usage: %s" % usage.strip())
+            messages.append("")
 
-    print_out('\n'.join(messages))
+        description = _description(module)
+        if description:
+            messages.append(_description(module))
+        else:
+            messages.append("No description.")
+
+        print_out('\n'.join(messages))
 
 
 def _list_commands():

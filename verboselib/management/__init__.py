@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 import importlib
 import os
-import sys
 
-from stringlike.utils import text_type
+from verboselib.management.utils import print_err
+from verboselib._compatibility import text_type
+
 
 _cache = None
 
 
 def _list_modules():
-    path = __path__[0]
+    path = os.path.join(__path__[0], 'commands')
     try:
         return [
             file_name[:-3] for file_name in os.listdir(path)
@@ -22,8 +23,9 @@ def _list_modules():
 
 
 def _load_module(name):
+    module_name = 'verboselib.management.commands.%s' % name
     try:
-        module = importlib.import_module('verboselib.management.%s' % name)
+        module = importlib.import_module(module_name)
     except Exception as e:
         print_err("Failed to load module for command '{:}': {:}"
                   .format(name, text_type(e)))
@@ -42,11 +44,3 @@ def get_commands():
             if module if not None
         }
     return _cache
-
-
-def _wrap_writer(writer):
-    return lambda x: writer("%s\n" % x)
-
-
-print_out = _wrap_writer(sys.stdout.write)
-print_err = _wrap_writer(sys.stderr.write)

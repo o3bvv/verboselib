@@ -42,8 +42,8 @@ setup(
     license='LGPLv3',
     packages=[
         'verboselib',
-        'verboselib.bin',
         'verboselib.management',
+        'verboselib.management.commands',
     ],
     scripts=[
         'verboselib/bin/verboselib-manage.py',

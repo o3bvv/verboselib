@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import gettext
 
-from copy import copy
-
 from . import _core
 from ._compatibility import PY3
 from ._lazy import LazyString, LazyUnicode
@@ -57,9 +55,7 @@ class TranslationsFactory(object):
         }
 
     def _get_translation(self):
-        language = getattr(_core._current_language,
-                           'value',
-                           copy(_core._default_language))
+        language = _core.get_language()
 
         t = self._translations.get(language, None)
         if t is not None:

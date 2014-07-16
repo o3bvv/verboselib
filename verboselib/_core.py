@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
+from copy import copy
 from threading import local
 
 
 __all__ = (
-    'set_default_language',
+    'set_default_language', 'get_language',
     'use_language', 'use_language_bypass', 'drop_language',
 )
 
 BYPASS_VALUE = None
 
-_default_language = None
+_default_language = BYPASS_VALUE
 _current_language = local()
 
 
@@ -33,3 +34,10 @@ def drop_language():
     """
     if hasattr(_current_language, "value"):
         del _current_language.value
+
+
+def get_language():
+    """
+    Returns the currently selected language.
+    """
+    return copy(getattr(_current_language, 'value', _default_language))

@@ -39,6 +39,14 @@ def find_command(cmd, path=None, pathext=None):
     return None
 
 
+def ensure_programs(*programs):
+        for program in programs:
+            if find_command(program) is None:
+                raise RuntimeError(
+                    "Can't find %s. Make sure you have GNU gettext tools 0.15 "
+                    "or newer installed." % program)
+
+
 def handle_extensions(extensions=None, ignored=None):
     """
     Organizes multiple extensions that are separated with commas or passed by

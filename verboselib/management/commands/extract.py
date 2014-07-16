@@ -12,7 +12,7 @@ from itertools import dropwhile
 
 from verboselib._lazy import LazyUnicode
 from verboselib.management.utils import (
-    find_command, handle_extensions, popen_wrapper, print_err, print_out,
+    ensure_programs, handle_extensions, popen_wrapper, print_err, print_out,
 )
 
 
@@ -190,7 +190,7 @@ class Command(object):
             print_out("No target locales")
             sys.exit()
 
-        self.ensure_programs()
+        ensure_programs('xgettext', 'msguniq', 'msgmerge', 'msgattrib')
         self.ensure_locale_dir()
 
         potfile = self.make_pot_file()
@@ -209,13 +209,6 @@ class Command(object):
     def ensure_target_locale(self):
         if self.locale is None and not self.process_all:
             self.usage_error()
-
-    def ensure_programs(self):
-        for program in ['xgettext', 'msguniq', 'msgmerge', 'msgattrib', ]:
-            if find_command(program) is None:
-                raise RuntimeError(
-                    "Can't find %s. Make sure you have GNU gettext tools 0.15 "
-                    "or newer installed." % program)
 
     def ensure_locale_dir(self):
         if os.path.exists(self.locale_dir):

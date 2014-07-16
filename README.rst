@@ -34,7 +34,7 @@ Install from `PyPI <https://pypi.python.org/pypi/verboselib>`_:
 
 .. code-block:: bash
 
-    $ pip install verboselib
+  $ pip install verboselib
 
 API overview
 ------------
@@ -43,19 +43,19 @@ Here's a quick usage example:
 
 .. code-block:: python
 
-    >>> from verboselib import use_language
-    >>> from verboselib.factory import TranslationsFactory
+  >>> from verboselib import use_language
+  >>> from verboselib.factory import TranslationsFactory
 
-    >>> translations = TranslationsFactory(domain="example", locale_dir="locale")
-    >>> _ = translations.ugettext_lazy
+  >>> translations = TranslationsFactory(domain="example", locale_dir="locale")
+  >>> _ = translations.ugettext_lazy
 
-    >>> message = _("Hi there!")
-    >>> use_language('en')
-    >>> print(message)
-    'Hi there!'
-    >>> use_language('sv')
-    >>> print(message)
-    'Hej där!'
+  >>> message = _("Hi there!")
+  >>> use_language('en')
+  >>> print(message)
+  'Hi there!'
+  >>> use_language('sv')
+  >>> print(message)
+  'Hej där!'
 
 TranslationsFactory
 ^^^^^^^^^^^^^^^^^^^

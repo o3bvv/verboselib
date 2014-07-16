@@ -23,7 +23,7 @@ applications. This includes:
   current thread globally;
 - tools to help you to update and compile catalogs of translations.
 
-In short, all this looks like `translation in Django`_ but without Django.
+In short, all this looks like `translation in Django`_, but without Django.
 
     A samurai without a sword is like a samurai with one, but only without one.
 
@@ -52,10 +52,10 @@ Here's a quick usage example:
     >>> message = _("Hi there!")
     >>> use_language('en')
     >>> print(message)
-    Hi there!
+    'Hi there!'
     >>> use_language('sv')
     >>> print(message)
-    Hej där!
+    'Hej där!'
 
 TranslationsFactory
 ^^^^^^^^^^^^^^^^^^^

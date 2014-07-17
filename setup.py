@@ -48,6 +48,9 @@ setup(
     scripts=[
         'verboselib/bin/verboselib-manage.py',
     ],
+    platforms=[
+        'any',
+    ],
     include_package_data=True,
     install_requires=requirements,
     zip_safe=False,

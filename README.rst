@@ -252,7 +252,7 @@ Managing catalogs of translations
 Its purpose is to help you to extract translatable messages from your sources
 and to compile catalogs of translations.
 
-.. code-block:: bash
+.. code-block::
 
   $ verboselib-manage.py
   Execute management commands for verboselib.
@@ -275,7 +275,7 @@ Getting help
 
 Use ``help`` to get commands list or to show help for some command, e.g.:
 
-.. code-block:: bash
+.. code-block::
 
   $ verboselib-manage.py help help
   usage: help [COMMAND]

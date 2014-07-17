@@ -52,7 +52,9 @@ def _list_commands():
         module = commands[name]
         description = _description(module)
         if description:
-            message = "{:} ({:})".format(name, description.split('\n')[0])
+            description = description.split('\n')[0].rstrip('.')
+            description = description[0].lower() + description[1:]
+            message = "{:} ({:}).".format(name, description)
         else:
             message = name
         messages.append("    - " + message)

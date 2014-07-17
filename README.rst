@@ -287,7 +287,7 @@ Extracting messages
 
 ``extract`` command will help you to extract or update your messages:
 
-.. code-block:: bash
+.. code-block::
 
   $ verboselib-manage.py help extract
   usage: extract [-d DOMAIN] [-l LOCALE] [-a] [-o OUTPUT_DIR] [-k KEYWORD]
@@ -354,7 +354,7 @@ Compiling translation catalogs
 Use ``compile`` command to compile all translation files inside a single
 ``locale dir``:
 
-.. code-block:: bash
+.. code-block::
 
   $ verboselib-manage.py help compile
   usage: compile [-l LOCALE] [-d LOCALE_DIR]

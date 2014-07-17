@@ -13,7 +13,7 @@ A little L10N framework for Python libraries and applications.
     :backlinks: none
 
 Key points
----------
+----------
 
 ``verboselib`` can help you to add verbosity to stand-alone libraries or
 applications. This includes:

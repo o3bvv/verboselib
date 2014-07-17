@@ -378,11 +378,34 @@ Use ``compile`` command to compile all translation files inside a single
 Changelog
 ---------
 
+* `0.1.0`_ (Jul 17, 2014)
+
+  Initial version
+
 Credits
 -------
 
+Creation of this library was inspired by ``translations`` package from `Django`_
+and ``locale`` module from `Sphinx`_.
+
+Some blocks of code were taken from Django and adopted for general-purpose
+usage. Links to original sources are included into docstrings.
+
+I would like to thank `3noch`_ for accepting my proposed changes for
+`stringlike`_ library which provides support of lazy strings for ``verboselib``.
+
 Future plans and thoughts
 -------------------------
+
+- This library is in alpha state currently, because ``lgettext``, ``ngettext``,
+  ``lngettext``, ``ungettext``, ``dgettext`` and other nice methods are not
+  implemented now. This is a nice point to start work on the next version from.
+- Currently ``verboselib`` supports global language for current thread only.
+  Seems, it would be good if support of global language for the whole process
+  will be implemented.
+- Though support for merging translation catalogs is already implemented,
+  ``TranslationsFactory`` accepts only one domain now. Maybe multiple domains is
+  a nice feature to implement too. Same thing about ``locale_dir``.
 
 .. |Build Status| image:: http://img.shields.io/travis/oblalex/verboselib.svg?style=flat&branch=master
    :target: https://travis-ci.org/oblalex/verboselib
@@ -394,3 +417,11 @@ Future plans and thoughts
    :target: https://crate.io/packages/verboselib/
 
 .. _translation in Django: https://docs.djangoproject.com/en/1.7/topics/i18n/translation/
+
+.. _0.1.0: https://github.com/oblalex/verboselib/releases/tag/v0.1.0
+
+.. _Django: https://www.djangoproject.com/
+.. _Sphinx: http://sphinx-doc.org/
+
+.. _3noch: https://github.com/3noch
+.. _stringlike: https://pypi.python.org/pypi/stringlike

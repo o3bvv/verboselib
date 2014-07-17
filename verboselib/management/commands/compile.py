@@ -86,7 +86,7 @@ def _get_parser():
             '-d', '--locale-dir',
             default='locale',
             dest='locale_dir',
-            help="Path to the directory where locales will are stored "
+            help="Path to the directory where locales are stored "
                  "(default: \"locale\").",
         )
     return _parser

@@ -245,8 +245,135 @@ and vice versa, for converting locale to language:
   >>> to_language('en_US')
   'en-us'
 
-Managing translation catalogs
------------------------------
+Managing catalogs of translations
+---------------------------------
+
+``verboselib`` comes up with management script called ``verboselib-manage.py``.
+Its purpose is to help you to extract translatable messages from your sources
+and to compile catalogs of translations.
+
+.. code-block:: bash
+
+  $ verboselib-manage.py
+  Execute management commands for verboselib.
+  Available commands:
+
+      - compile (compile '*.po' files into '*.mo' binaries).
+      - extract (extract 'gettext' strings from sources).
+      - help (list available commands or show help for a particular command).
+      - version (show current version of verboselib).
+
+..
+
+    **TIP**: You can use management script even if you are not going to use
+    ``verboselib`` itself. It can make your life a bit easier anyway.
+
+As you can see, there are 4 currently available commands.
+
+Getting help
+^^^^^^^^^^^^
+
+Use ``help`` to get commands list or to show help for some command, e.g.:
+
+.. code-block:: bash
+
+  $ verboselib-manage.py help help
+  usage: help [COMMAND]
+
+  List available commands or show help for a particular command.
+
+Extracting messages
+^^^^^^^^^^^^^^^^^^^
+
+``extract`` command will help you to extract or update your messages:
+
+.. code-block:: bash
+
+  $ verboselib-manage.py help extract
+  usage: extract [-d DOMAIN] [-l LOCALE] [-a] [-o OUTPUT_DIR] [-k KEYWORD]
+                 [-e EXTENSIONS] [-s] [-i PATTERN] [--no-default-ignore]
+                 [--no-wrap] [--no-location] [--no-obsolete] [--keep-pot] [-v]
+
+  Extract 'gettext' strings from sources.
+
+  optional arguments:
+    -d DOMAIN, --domain DOMAIN
+                          The domain of the message files (default: "messages").
+    -l LOCALE, --locale LOCALE
+                          Create or update the message files for the given
+                          locale(s) (e.g. en_US). Can be used multiple times.
+    -a, --all             Update the message files for all existing locales
+                          (default: false).
+    -o OUTPUT_DIR, --output-dir OUTPUT_DIR
+                          Path to the directory where locales will be stored,
+                          a.k.a. 'locale dir' (default: "locale").
+    -k KEYWORD, --keyword KEYWORD
+                          Look for KEYWORD as an additional keyword (e.g., L_).
+                          Can be used multiple times.
+    -e EXTENSIONS, --extension EXTENSIONS
+                          The file extension(s) to examine. Separate multiple
+                          extensions with commas, or use multiple times.
+    -s, --symlinks        Follows symlinks to directories when examining sources
+                          for translation strings (default: false).
+    -i PATTERN, --ignore PATTERN
+                          Ignore files or directories matching this glob-style
+                          pattern. Use multiple times to ignore more.
+    --no-default-ignore   Don't ignore the common glob-style patterns 'CVS',
+                          '.*', '*~', '*.pyc' (default: false).
+    --no-wrap             Don't break long message lines into several lines.
+                          (default: false).
+    --no-location         Don't write '#: filename:line' lines (default: false).
+    --no-obsolete         Remove obsolete message strings (default: false).
+    --keep-pot            Keep .pot file after making messages. Useful when
+                          debugging (default: false).
+    -v, --verbose         Use verbose output (default: false).
+
+Help output is quite comprehensive. First 5 options are considered to be used
+most often.
+
+If you had no translations before, you will need to specify target ``locale``
+(or their list) to create translation files for:
+
+.. code-block:: bash
+
+  $ verboselib-manage.py extract --locale 'uk' -l 'en' -l 'it'
+
+If you want just to update all existing files, you may use ``--all`` argument.
+
+Default keywords to look for are: ``gettext``, ``gettext_lazy``, ``ugettext``,
+``ugettext_lazy`` and ``_``. Use ``--keyword`` (``-k``) argument to add extra
+keyword, e.g.:
+
+.. code-block:: bash
+
+  $ verboselib-manage.py extract --keyword 'L_' -k 'U_' -k 'UL_'
+
+Compiling translation catalogs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Use ``compile`` command to compile all translation files inside a single
+``locale dir``:
+
+.. code-block:: bash
+
+  $ verboselib-manage.py help compile
+  usage: compile [-l LOCALE] [-d LOCALE_DIR]
+
+  Compile '*.po' files into '*.mo' binaries.
+
+  optional arguments:
+    -l LOCALE, --locale LOCALE
+                          Locale(s) to process (e.g. en_US). Default is to
+                          process all. Can be used multiple times.
+    -d LOCALE_DIR, --locale-dir LOCALE_DIR
+                          Path to the directory where locales are stored
+                          (default: "locale").
+
+..
+
+    **Just for information**:
+    `locale <https://github.com/oblalex/verboselib/tree/master/tests/locale>`_
+    directory for tests was built using management script.
 
 Changelog
 ---------

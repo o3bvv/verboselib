@@ -126,8 +126,8 @@ of currently supported methods includes:
       _, U_ = translations.gettext, translations.ugettext
       L_, UL_ = translations.gettext_lazy, translations.ugettext_lazy
 
-Setting up default language
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Setting and getting default language
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you are developing some application, it makes sence to specify a **global**
 default language. This language will be used if current language is not
@@ -135,9 +135,11 @@ specified. Example:
 
 .. code-block:: python
 
-  from verboselib import set_default_language
+  from verboselib import set_default_language, get_default_language
 
+  get_default_language()  # ==> 'None'
   set_default_language('en')
+  get_default_language()  # ==> 'en'
 
 ..
 
@@ -378,6 +380,11 @@ Use ``compile`` command to compile all translation files inside a single
 Changelog
 ---------
 
+* `0.2.0`_ (Dec 31, 2014)
+
+  #. Add ``get_default_language()`` method.
+  #. Use default translation classes from ``gettext`` module.
+
 * `0.1.0`_ (Jul 17, 2014)
 
   Initial version
@@ -418,6 +425,7 @@ Future plans and thoughts
 
 .. _translation in Django: https://docs.djangoproject.com/en/1.7/topics/i18n/translation/
 
+.. _0.2.0: https://github.com/oblalex/verboselib/releases/tag/v0.1.0...v0.2.0
 .. _0.1.0: https://github.com/oblalex/verboselib/releases/tag/v0.1.0
 
 .. _Django: https://www.djangoproject.com/

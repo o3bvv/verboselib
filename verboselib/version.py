@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
 
-__version_info__ = (0, 1, 1)
-__version__ = '.'.join(str(x) for x in __version_info__)
+VERSION_MAJOR = 0
+VERSION_MINOR = 2
+VERSION_PATCH = 0
+
+VERSION_INFO = (VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH)
+VERSION = '.'.join([str(x) for x in VERSION_INFO])

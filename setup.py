@@ -1,22 +1,26 @@
 # -*- coding: utf-8 -*-
+
 import os
 
 from setuptools import setup
 
-here = os.path.abspath(os.path.dirname(__file__))
+__here__ = os.path.abspath(os.path.dirname(__file__))
 
-README = open(os.path.join(here, 'README.rst')).read()
-
-name = 'verboselib'
-requirements = [
-    r.strip() for r in open(os.path.join(here, 'requirements.txt')).readlines()
+README = open(os.path.join(__here__, 'README.rst')).read()
+REQUIREMENTS = [
+    i.strip()
+    for i in open(os.path.join(__here__, 'requirements.txt')).readlines()
 ]
 
-exec(open(os.path.join(here, name, 'version.py')).read())
+# Get VERSION, which is all stored in 'il2fb.parsers.mission/version.py'
+version_file = os.path.join('verboselib', 'version.py')
+# Use exec for compabibility with Python 3
+exec(open(version_file).read())
+
 
 setup(
-    name=name,
-    version=__version__,
+    name='verboselib',
+    version=VERSION_INFO,
     description='A little L10N framework for libraries and applications',
     long_description=README,
     keywords=[
@@ -28,11 +32,10 @@ setup(
         'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
         'Natural Language :: English',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
         'Topic :: Software Development :: Libraries :: Application Frameworks',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
@@ -52,6 +55,6 @@ setup(
         'any',
     ],
     include_package_data=True,
-    install_requires=requirements,
+    install_requires=REQUIREMENTS,
     zip_safe=False,
 )

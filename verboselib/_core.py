@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+
 from copy import copy
 from threading import local
 
 
 __all__ = (
-    'set_default_language', 'get_language',
+    'set_default_language', 'get_default_language', 'get_language',
     'use_language', 'use_language_bypass', 'drop_language',
 )
 
@@ -16,7 +17,11 @@ _current_language = local()
 
 def set_default_language(language=None):
     global _default_language
-    _default_language = language
+    _default_language = copy(language)
+
+
+def get_default_language():
+    return copy(_default_language)
 
 
 def use_language(language):

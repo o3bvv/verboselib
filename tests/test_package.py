@@ -7,6 +7,7 @@ import unittest
 
 from verboselib import (
     use_language, use_language_bypass, drop_language, set_default_language,
+    get_default_language,
 )
 from verboselib.factory import TranslationsFactory, VerboselibTranslation
 from verboselib._compatibility import PY2, PY3
@@ -45,7 +46,7 @@ class PackageTestCase(unittest.TestCase):
         translated = _("verboselib test string")
         self.assertEqual(translated, source)
 
-    def test_default_language(self):
+    def test_set_default_language(self):
         _ = self.translations.ugettext
 
         translated = _("verboselib test string")
@@ -66,6 +67,11 @@ class PackageTestCase(unittest.TestCase):
         set_default_language('en-gb')
         translated = _("verboselib test string")
         self.assertEqual(translated, "verboselib test string in en_GB")
+
+    def test_get_default_language(self):
+        self.assertEqual(get_default_language(), None)
+        set_default_language('en')
+        self.assertEqual(get_default_language(), 'en')
 
     def test_use_n_drop_language(self):
         _ = self.translations.gettext

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__all__ = (
-    'to_locale', 'to_language',
-)
+__all__ = ('to_locale', 'to_language', )
 
 
 def to_locale(language, to_lower=False):

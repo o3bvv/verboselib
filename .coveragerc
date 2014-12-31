@@ -4,6 +4,7 @@ omit =
     */tests/*
     verboselib/bin/*
     verboselib/management/*
+    verboselib/version.py
 
 [report]
 exclude_lines =

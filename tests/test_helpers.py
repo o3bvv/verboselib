@@ -12,5 +12,6 @@ class HelpersTestCase(unittest.TestCase):
         self.assertEqual(to_locale('sr-lat'), 'sr_Lat')
 
     def test_to_language(self):
+        self.assertEqual(to_language('EN'), 'en')
         self.assertEqual(to_language('en_US'), 'en-us')
         self.assertEqual(to_language('sr_Lat'), 'sr-lat')

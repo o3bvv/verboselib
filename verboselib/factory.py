@@ -5,48 +5,15 @@ import gettext
 from . import _core
 from ._compatibility import PY3
 from ._lazy import LazyString, LazyUnicode
-from .helpers import to_language, to_locale
+from .helpers import to_locale
 
 
-__all__ = (
-    'TranslationsFactory',
-)
-
-
-class VerboselibTranslation(gettext.GNUTranslations):
-    """
-    This class sets up the GNUTranslations context with regard to output
-    charset.
-
-    Taken `from Django <http://bit.ly/1xME37A>`_.
-    """
-    def __init__(self, *args, **kwargs):
-        gettext.GNUTranslations.__init__(self, *args, **kwargs)
-        self.set_output_charset('utf-8')
-        self.__language = '??'
-
-    def merge(self, other):
-        self._catalog.update(other._catalog)
-
-    def set_language(self, language):
-        self.__language = language
-        self.__to_language = to_language(language)
-
-    def language(self):
-        return self.__language
-
-    def to_language(self):
-        return self.__to_language
-
-    def __repr__(self):
-        return "<VerboselibTranslation lang:%s>" % self.__language
+__all__ = ('TranslationsFactory', )
 
 
 class TranslationsFactory(object):
 
-    __slots__ = [
-        '_translations', 'domain', 'locale_dir',
-    ]
+    __slots__ = ['_translations', 'domain', 'locale_dir', ]
 
     def __init__(self, domain, locale_dir):
         self.domain = domain
@@ -63,13 +30,11 @@ class TranslationsFactory(object):
             return t
 
         locale = to_locale(language)
-        t = gettext.translation(
-            domain=self.domain,
-            localedir=self.locale_dir,
-            languages=[locale, ],
-            class_=VerboselibTranslation,
-            fallback=True)
-        t.set_language(language)
+        t = gettext.translation(domain=self.domain,
+                                localedir=self.locale_dir,
+                                languages=[locale, ],
+                                codeset='utf-8',
+                                fallback=True)
         self._translations[language] = t
         return t
 

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import gettext
 import os
 import unittest
 
@@ -9,8 +8,8 @@ from verboselib import (
     use_language, use_language_bypass, drop_language, set_default_language,
     get_default_language,
 )
-from verboselib.factory import TranslationsFactory, VerboselibTranslation
-from verboselib._compatibility import PY2, PY3
+from verboselib.factory import TranslationsFactory
+from verboselib._compatibility import PY2
 
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -117,50 +116,3 @@ class PackageTestCase(unittest.TestCase):
         self.assertEqual(translated.format("Иван"), "Доброе утро, Иван!")
         use_language('uk')
         self.assertEqual(translated.format("Іван"), "Доброго ранку, Іван!")
-
-
-class VerboselibTranslationTestCase(unittest.TestCase):
-
-    def setUp(self):
-        self.method_name = 'gettext' if PY3 else 'ugettext'
-        self.path = os.path.join(here, "locale")
-
-    def test_merge(self):
-
-        def _translation(domain):
-            class_ = VerboselibTranslation
-            t = gettext.translation(domain, self.path, ['uk'], class_)
-            t.set_language('uk')
-            return t
-
-        t1 = _translation("tests")
-        method1 = getattr(t1, self.method_name)
-        self.assertEqual(method1("Hello"), "Вітаю")
-        self.assertEqual(method1("Good bye"), "Good bye")
-
-        t2 = _translation("extra")
-        method2 = getattr(t2, self.method_name)
-        self.assertEqual(method2("Hello"), "Hello")
-        self.assertEqual(method2("Good bye"), "До зустрічі")
-
-        t1.merge(t2)
-        self.assertEqual(method1("Hello"), "Вітаю")
-        self.assertEqual(method1("Good bye"), "До зустрічі")
-
-    def test_language(self):
-        class_ = VerboselibTranslation
-        t = gettext.translation('tests', self.path, ['en_US'], class_)
-        t.set_language('en_US')
-        self.assertEqual(t.language(), 'en_US')
-
-    def test_to_language(self):
-        class_ = VerboselibTranslation
-        t = gettext.translation('tests', self.path, ['en_US'], class_)
-        t.set_language('en_US')
-        self.assertEqual(t.to_language(), 'en-us')
-
-    def test_repr(self):
-        class_ = VerboselibTranslation
-        t = gettext.translation('tests', self.path, ['en_US'], class_)
-        t.set_language('en_US')
-        self.assertEqual(repr(t), '<VerboselibTranslation lang:en_US>')

@@ -382,8 +382,8 @@ Changelog
 
 * `0.2.0`_ (Dec 31, 2014)
 
-  #. Add ``get_default_language()`` method.
-  #. Use default translation classes from ``gettext`` module.
+  * Add ``get_default_language()`` method.
+  * Use default translation classes from ``gettext`` module.
 
 * `0.1.0`_ (Jul 17, 2014)
 

@@ -20,7 +20,7 @@ exec(open(version_file).read())
 
 setup(
     name='verboselib',
-    version=VERSION_INFO,
+    version=VERSION,
     description='A little L10N framework for libraries and applications',
     long_description=README,
     keywords=[

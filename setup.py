@@ -12,7 +12,7 @@ REQUIREMENTS = [
     for i in open(os.path.join(__here__, 'requirements.txt')).readlines()
 ]
 
-# Get VERSION, which is all stored in 'il2fb.parsers.mission/version.py'
+# Get VERSION
 version_file = os.path.join('verboselib', 'version.py')
 # Use exec for compabibility with Python 3
 exec(open(version_file).read())

@@ -13,7 +13,7 @@ A little L10N framework for Python libraries and applications.
     :backlinks: none
 
 Key points
----------
+----------
 
 ``verboselib`` can help you to add verbosity to stand-alone libraries or
 applications. This includes:
@@ -245,17 +245,167 @@ and vice versa, for converting locale to language:
   >>> to_language('en_US')
   'en-us'
 
-Managing translation catalogs
------------------------------
+Managing catalogs of translations
+---------------------------------
+
+``verboselib`` comes up with management script called ``verboselib-manage.py``.
+Its purpose is to help you to extract translatable messages from your sources
+and to compile catalogs of translations.
+
+.. code-block::
+
+  $ verboselib-manage.py
+  Execute management commands for verboselib.
+  Available commands:
+
+      - compile (compile '*.po' files into '*.mo' binaries).
+      - extract (extract 'gettext' strings from sources).
+      - help (list available commands or show help for a particular command).
+      - version (show current version of verboselib).
+
+..
+
+    **TIP**: You can use management script even if you are not going to use
+    ``verboselib`` itself. It can make your life a bit easier anyway.
+
+As you can see, there are 4 currently available commands.
+
+Getting help
+^^^^^^^^^^^^
+
+Use ``help`` to get commands list or to show help for some command, e.g.:
+
+.. code-block::
+
+  $ verboselib-manage.py help help
+  usage: help [COMMAND]
+
+  List available commands or show help for a particular command.
+
+Extracting messages
+^^^^^^^^^^^^^^^^^^^
+
+``extract`` command will help you to extract or update your messages:
+
+.. code-block::
+
+  $ verboselib-manage.py help extract
+  usage: extract [-d DOMAIN] [-l LOCALE] [-a] [-o OUTPUT_DIR] [-k KEYWORD]
+                 [-e EXTENSIONS] [-s] [-i PATTERN] [--no-default-ignore]
+                 [--no-wrap] [--no-location] [--no-obsolete] [--keep-pot] [-v]
+
+  Extract 'gettext' strings from sources.
+
+  optional arguments:
+    -d DOMAIN, --domain DOMAIN
+                          The domain of the message files (default: "messages").
+    -l LOCALE, --locale LOCALE
+                          Create or update the message files for the given
+                          locale(s) (e.g. en_US). Can be used multiple times.
+    -a, --all             Update the message files for all existing locales
+                          (default: false).
+    -o OUTPUT_DIR, --output-dir OUTPUT_DIR
+                          Path to the directory where locales will be stored,
+                          a.k.a. 'locale dir' (default: "locale").
+    -k KEYWORD, --keyword KEYWORD
+                          Look for KEYWORD as an additional keyword (e.g., L_).
+                          Can be used multiple times.
+    -e EXTENSIONS, --extension EXTENSIONS
+                          The file extension(s) to examine. Separate multiple
+                          extensions with commas, or use multiple times.
+    -s, --symlinks        Follows symlinks to directories when examining sources
+                          for translation strings (default: false).
+    -i PATTERN, --ignore PATTERN
+                          Ignore files or directories matching this glob-style
+                          pattern. Use multiple times to ignore more.
+    --no-default-ignore   Don't ignore the common glob-style patterns 'CVS',
+                          '.*', '*~', '*.pyc' (default: false).
+    --no-wrap             Don't break long message lines into several lines.
+                          (default: false).
+    --no-location         Don't write '#: filename:line' lines (default: false).
+    --no-obsolete         Remove obsolete message strings (default: false).
+    --keep-pot            Keep .pot file after making messages. Useful when
+                          debugging (default: false).
+    -v, --verbose         Use verbose output (default: false).
+
+Help output is quite comprehensive. First 5 options are considered to be used
+most often.
+
+If you had no translations before, you will need to specify target ``locale``
+(or their list) to create translation files for:
+
+.. code-block:: bash
+
+  $ verboselib-manage.py extract --locale 'uk' -l 'en' -l 'it'
+
+If you want just to update all existing files, you may use ``--all`` argument.
+
+Default keywords to look for are: ``gettext``, ``gettext_lazy``, ``ugettext``,
+``ugettext_lazy`` and ``_``. Use ``--keyword`` (``-k``) argument to add extra
+keyword, e.g.:
+
+.. code-block:: bash
+
+  $ verboselib-manage.py extract --keyword 'L_' -k 'U_' -k 'UL_'
+
+Compiling translation catalogs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Use ``compile`` command to compile all translation files inside a single
+``locale dir``:
+
+.. code-block::
+
+  $ verboselib-manage.py help compile
+  usage: compile [-l LOCALE] [-d LOCALE_DIR]
+
+  Compile '*.po' files into '*.mo' binaries.
+
+  optional arguments:
+    -l LOCALE, --locale LOCALE
+                          Locale(s) to process (e.g. en_US). Default is to
+                          process all. Can be used multiple times.
+    -d LOCALE_DIR, --locale-dir LOCALE_DIR
+                          Path to the directory where locales are stored
+                          (default: "locale").
+
+..
+
+    **Just for information**:
+    `locale <https://github.com/oblalex/verboselib/tree/master/tests/locale>`_
+    directory for tests was built using management script.
 
 Changelog
 ---------
 
+* `0.1.0`_ (Jul 17, 2014)
+
+  Initial version
+
 Credits
 -------
 
+Creation of this library was inspired by ``translations`` package from `Django`_
+and ``locale`` module from `Sphinx`_.
+
+Some blocks of code were taken from Django and adopted for general-purpose
+usage. Links to original sources are included into docstrings.
+
+I would like to thank `3noch`_ for accepting my proposed changes for
+`stringlike`_ library which provides support of lazy strings for ``verboselib``.
+
 Future plans and thoughts
 -------------------------
+
+- This library is in alpha state currently, because ``lgettext``, ``ngettext``,
+  ``lngettext``, ``ungettext``, ``dgettext`` and other nice methods are not
+  implemented now. This is a nice point to start work on the next version from.
+- Currently ``verboselib`` supports global language for current thread only.
+  Seems, it would be good if support of global language for the whole process
+  will be implemented.
+- Though support for merging translation catalogs is already implemented,
+  ``TranslationsFactory`` accepts only one domain now. Maybe multiple domains is
+  a nice feature to implement too. Same thing about ``locale_dir``.
 
 .. |Build Status| image:: http://img.shields.io/travis/oblalex/verboselib.svg?style=flat&branch=master
    :target: https://travis-ci.org/oblalex/verboselib
@@ -267,3 +417,11 @@ Future plans and thoughts
    :target: https://crate.io/packages/verboselib/
 
 .. _translation in Django: https://docs.djangoproject.com/en/1.7/topics/i18n/translation/
+
+.. _0.1.0: https://github.com/oblalex/verboselib/releases/tag/v0.1.0
+
+.. _Django: https://www.djangoproject.com/
+.. _Sphinx: http://sphinx-doc.org/
+
+.. _3noch: https://github.com/3noch
+.. _stringlike: https://pypi.python.org/pypi/stringlike

@@ -10,8 +10,8 @@ python:
     - "3.5"
     - "3.6"
 install:
-    - pip install -e . --use-mirrors
-    - pip install nose coverage coveralls --use-mirrors
+    - pip install -e .
+    - pip install nose coverage coveralls
 script:
     - coverage run `which nosetests` --nocapture
     - coverage report -m

@@ -12,6 +12,7 @@ A little L10N framework for Python libraries and applications.
     :depth: 1
     :backlinks: none
 
+
 Key points
 ----------
 
@@ -27,6 +28,7 @@ In short, all this looks like `translation in Django`_, but without Django.
 
     A samurai without a sword is like a samurai with one, but only without one.
 
+
 Installation
 ------------
 
@@ -35,6 +37,7 @@ Install from `PyPI <https://pypi.python.org/pypi/verboselib>`_:
 .. code-block:: bash
 
   $ pip install verboselib
+
 
 API overview
 ------------
@@ -56,6 +59,7 @@ Here's a quick usage example:
   >>> use_language('sv')
   >>> print(message)
   'Hej där!'
+
 
 TranslationsFactory
 ^^^^^^^^^^^^^^^^^^^
@@ -126,6 +130,7 @@ of currently supported methods includes:
       _, U_ = translations.gettext, translations.ugettext
       L_, UL_ = translations.gettext_lazy, translations.ugettext_lazy
 
+
 Setting and getting default language
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -149,6 +154,7 @@ specified. Example:
 If both current and default languages are not set, original messages will be
 returned instead of their translations.
 
+
 Setting up current language
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -159,6 +165,7 @@ You can set up current **global** language for current thread from any place:
   from verboselib import use_language
 
   use_language('fr')
+
 
 Querying current language
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -173,6 +180,7 @@ You can get the value of currently used language:
 
 If current value is ``None``, this means that neither current nor default
 language is set and original messages will be returned.
+
 
 Clearing current language
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -209,6 +217,7 @@ will use default language:
         use_language(saved)
         send_email(subject, message, user.email)
 
+
 Disabling translations
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -224,6 +233,7 @@ used:
 After this ``get_language`` function will return ``None``.
 
 Use ``use_language`` to enable translations again.
+
 
 Locale-to-language conversions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -247,16 +257,17 @@ and vice versa, for converting locale to language:
   >>> to_language('en_US')
   'en-us'
 
+
 Managing catalogs of translations
 ---------------------------------
 
-``verboselib`` comes up with management script called ``verboselib-manage.py``.
+``verboselib`` comes up with management script called ``verboselib-manage``.
 Its purpose is to help you to extract translatable messages from your sources
 and to compile catalogs of translations.
 
 .. code-block::
 
-  $ verboselib-manage.py
+  $ verboselib-manage
   Execute management commands for verboselib.
   Available commands:
 
@@ -272,6 +283,7 @@ and to compile catalogs of translations.
 
 As you can see, there are 4 currently available commands.
 
+
 Getting help
 ^^^^^^^^^^^^
 
@@ -279,10 +291,11 @@ Use ``help`` to get commands list or to show help for some command, e.g.:
 
 .. code-block::
 
-  $ verboselib-manage.py help help
+  $ verboselib-manage help help
   usage: help [COMMAND]
 
   List available commands or show help for a particular command.
+
 
 Extracting messages
 ^^^^^^^^^^^^^^^^^^^
@@ -291,7 +304,7 @@ Extracting messages
 
 .. code-block::
 
-  $ verboselib-manage.py help extract
+  $ verboselib-manage help extract
   usage: extract [-d DOMAIN] [-l LOCALE] [-a] [-o OUTPUT_DIR] [-k KEYWORD]
                  [-e EXTENSIONS] [-s] [-i PATTERN] [--no-default-ignore]
                  [--no-wrap] [--no-location] [--no-obsolete] [--keep-pot] [-v]
@@ -338,7 +351,7 @@ If you had no translations before, you will need to specify target ``locale``
 
 .. code-block:: bash
 
-  $ verboselib-manage.py extract --locale 'uk' -l 'en' -l 'it'
+  $ verboselib-manage extract --locale 'uk' -l 'en' -l 'it'
 
 If you want just to update all existing files, you may use ``--all`` argument.
 
@@ -348,7 +361,8 @@ keyword, e.g.:
 
 .. code-block:: bash
 
-  $ verboselib-manage.py extract --keyword 'L_' -k 'U_' -k 'UL_'
+  $ verboselib-manage extract --keyword 'L_' -k 'U_' -k 'UL_'
+
 
 Compiling translation catalogs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -358,7 +372,7 @@ Use ``compile`` command to compile all translation files inside a single
 
 .. code-block::
 
-  $ verboselib-manage.py help compile
+  $ verboselib-manage help compile
   usage: compile [-l LOCALE] [-d LOCALE_DIR]
 
   Compile '*.po' files into '*.mo' binaries.
@@ -377,8 +391,14 @@ Use ``compile`` command to compile all translation files inside a single
     `locale <https://github.com/oblalex/verboselib/tree/master/tests/locale>`_
     directory for tests was built using management script.
 
+
 Changelog
 ---------
+
+* `0.2.1`_ (Jul 16, 2017)
+
+  * Fix ``version`` command.
+  * Rename ``verboselib-manage.py`` executable to simply ``verboselib-manage``.
 
 * `0.2.0`_ (Dec 31, 2014)
 
@@ -388,6 +408,7 @@ Changelog
 * `0.1.0`_ (Jul 17, 2014)
 
   Initial version
+
 
 Credits
 -------
@@ -400,6 +421,7 @@ usage. Links to original sources are included into docstrings.
 
 I would like to thank `3noch`_ for accepting my proposed changes for
 `stringlike`_ library which provides support of lazy strings for ``verboselib``.
+
 
 Future plans and thoughts
 -------------------------
@@ -425,6 +447,7 @@ Future plans and thoughts
 
 .. _translation in Django: https://docs.djangoproject.com/en/1.7/topics/i18n/translation/
 
+.. _0.2.1: https://github.com/oblalex/verboselib/releases/tag/v0.2.0...v0.2.1
 .. _0.2.0: https://github.com/oblalex/verboselib/releases/tag/v0.1.0...v0.2.0
 .. _0.1.0: https://github.com/oblalex/verboselib/releases/tag/v0.1.0
 

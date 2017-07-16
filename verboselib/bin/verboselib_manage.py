@@ -10,7 +10,7 @@ from verboselib.management import get_commands
 from verboselib.management.utils import print_out, print_err
 
 
-def main(prog_name, args=None):
+def run(prog_name, args=None):
     args = args[:] if args else []
     commands = get_commands()
 
@@ -29,6 +29,10 @@ def main(prog_name, args=None):
     print_out("")
 
 
-if __name__ == "__main__":
+def main():
     prog_name = os.path.basename(sys.argv[0])
-    main(prog_name, args=sys.argv[1:])
+    run(prog_name, args=sys.argv[1:])
+
+
+if __name__ == "__main__":
+    main()

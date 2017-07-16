@@ -50,9 +50,11 @@ setup(
         'verboselib.management',
         'verboselib.management.commands',
     ],
-    scripts=[
-        'verboselib/bin/verboselib-manage.py',
-    ],
+    entry_points={
+        'console_scripts': [
+            'verboselib-manage = verboselib.bin.verboselib_manage:main',
+        ],
+    },
     platforms=[
         'any',
     ],

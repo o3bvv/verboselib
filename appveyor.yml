@@ -14,4 +14,4 @@ install:
   - "%PYTHON%/Scripts/pip.exe install -r ./requirements/ci.txt"
   - "%PYTHON%/Scripts/pip.exe install --upgrade --editable ."
 test_script:
-  - "%PYTHON%/Scripts/py.test --doctest-modules --verbose ./il2fb/regiments ./tests --cov ./il2fb/regiments ./tests"
+  - "%PYTHON%/Scripts/py.test --verbose ./verboselib ./tests --cov ./verboselib ./tests"

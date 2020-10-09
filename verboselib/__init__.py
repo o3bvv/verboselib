@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from ._core import *
-from .helpers import *
-from .factory import *
+from verboselib.core import *
+from verboselib.helpers import *
+from verboselib.translations import *

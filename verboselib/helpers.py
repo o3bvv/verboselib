@@ -1,37 +1,40 @@
-# -*- coding: utf-8 -*-
-
-__all__ = ('to_locale', 'to_language', )
+from verboselib.utils import export
 
 
-def to_locale(language, to_lower=False):
-    """
-    Turns a language name (en-us) into a locale name (en_US). If 'to_lower' is
-    True, the last component is lower-cased (en_us).
+@export
+def to_locale(language):
+  """
+  Turn a language name (en-us) into a locale name (en_US).
 
-    Taken `from Django <http://bit.ly/1ssrxqE>`_.
-    """
-    p = language.find('-')
-    if p >= 0:
-        if to_lower:
-            return language[:p].lower() + '_' + language[p + 1:].lower()
-        else:
-            # Get correct locale for sr-latn
-            if len(language[p + 1:]) > 2:
-                locale = language[:p].lower() + '_' + language[p + 1].upper()
-                return locale + language[p + 2:].lower()
-            return language[:p].lower() + '_' + language[p + 1:].upper()
-    else:
-        return language.lower()
+  Extracted `from Django <https://github.com/django/django/blob/e74b3d724e5ddfef96d1d66bd1c58e7aae26fc85/django/utils/translation/__init__.py#L274-L287>`_.
+
+  """
+  language, _, country = language.lower().partition("-")
+  if not country:
+    return language
+
+  # A language with > 2 characters after the dash only has its first
+  # character after the dash capitalized; e.g. sr-latn becomes sr_Latn.
+  # A language with 2 characters after the dash has both characters
+  # capitalized; e.g. en-us becomes en_US.
+  country, _, tail = country.partition("-")
+  country = country.title() if len(country) > 2 else country.upper()
+  if tail:
+    country += "-" + tail
+
+  return language + "_" + country
 
 
+@export
 def to_language(locale):
-    """
-    Turns a locale name (en_US) into a language name (en-us).
+  """
+  Turn a locale name (en_US) into a language name (en-us).
 
-    Taken `from Django <http://bit.ly/1vWACbE>`_.
-    """
-    p = locale.find('_')
-    if p >= 0:
-        return locale[:p].lower() + '-' + locale[p + 1:].lower()
-    else:
-        return locale.lower()
+  Extracted `from Django <https://github.com/django/django/blob/e74b3d724e5ddfef96d1d66bd1c58e7aae26fc85/django/utils/translation/__init__.py#L265-L271>`_.
+
+  """
+  p = locale.find("_")
+  if p >= 0:
+    return locale[:p].lower() + "-" + locale[p + 1:].lower()
+  else:
+    return locale.lower()

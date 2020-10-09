@@ -1,16 +1,21 @@
 verboselib
 ==========
 
-|Build Status| |Coverage Status| |PyPi package| |PyPi downloads|
+This is a little I18N  framework for Python libraries and applications.
 
-A little L10N framework for Python libraries and applications.
+|pypi_package| |python_versions| |license|
 
-**Table of contents**
+|unix_build| |windows_build| |codebeat| |codacy| |scrutinizer|
+
+
+.. raw:: html
+
+  <h2>Contents</h2>
 
 .. contents::
-    :local:
-    :depth: 1
-    :backlinks: none
+  :local:
+  :depth: 1
+  :backlinks: none
 
 
 Key points
@@ -46,17 +51,17 @@ Here's a quick usage example:
 
 .. code-block:: python
 
-  >>> from verboselib import use_language
+  >>> from verboselib import set_language
   >>> from verboselib.factory import TranslationsFactory
 
   >>> translations = TranslationsFactory(domain="example", locale_dir="locale")
   >>> _ = translations.ugettext_lazy
 
   >>> message = _("Hi there!")
-  >>> use_language('en')
+  >>> set_language('en')
   >>> print(message)
   'Hi there!'
-  >>> use_language('sv')
+  >>> set_language('sv')
   >>> print(message)
   'Hej där!'
 
@@ -162,9 +167,9 @@ You can set up current **global** language for current thread from any place:
 
 .. code-block:: python
 
-  from verboselib import use_language
+  from verboselib import set_language
 
-  use_language('fr')
+  set_language('fr')
 
 
 Querying current language
@@ -201,7 +206,7 @@ will use default language:
 
     .. code-block:: python
 
-      from verboselib import get_language, use_language
+      from verboselib import get_language, set_language
       from .utils import translations
 
       _ = translations.ugettext
@@ -209,12 +214,12 @@ will use default language:
 
       def send_greeting_email(user):
         saved = get_language()
-        use_language(user.language)
+        set_language(user.language)
 
         subject = _("Welcome to our service")
         message = _("Hello, {:}! Glad to see you among our users!").format(user.first_name)
 
-        use_language(saved)
+        set_language(saved)
         send_email(subject, message, user.email)
 
 
@@ -226,13 +231,13 @@ used:
 
 .. code-block:: python
 
-  from verboselib import use_language_bypass
+  from verboselib import set_language_bypass
 
-  use_language_bypass()
+  set_language_bypass()
 
 After this ``get_language`` function will return ``None``.
 
-Use ``use_language`` to enable translations again.
+Use ``set_language`` to enable translations again.
 
 
 Locale-to-language conversions
@@ -395,6 +400,10 @@ Use ``compile`` command to compile all translation files inside a single
 Changelog
 ---------
 
+* `1.0.0`_ (draft)
+
+  TODO
+
 * `0.2.1`_ (Jul 16, 2017)
 
   * Fix ``version`` command.
@@ -436,19 +445,43 @@ Future plans and thoughts
   ``TranslationsFactory`` accepts only one domain now. Maybe multiple domains is
   a nice feature to implement too. Same thing about ``locale_dir``.
 
-.. |Build Status| image:: http://img.shields.io/travis/oblalex/verboselib.svg?style=flat&branch=master
+
+.. |unix_build| image:: https://img.shields.io/travis/oblalex/verboselib
    :target: https://travis-ci.org/oblalex/verboselib
-.. |Coverage Status| image:: http://img.shields.io/coveralls/oblalex/verboselib.svg?style=flat&branch=master
-   :target: https://coveralls.io/r/oblalex/verboselib?branch=master
-.. |PyPi package| image:: http://img.shields.io/pypi/v/verboselib.svg?style=flat
+
+.. |windows_build| image:: https://ci.appveyor.com/api/projects/status/bdm3jnvuka1qjcm1/branch/master?svg=true
+    :target: https://ci.appveyor.com/project/oblalex/verboselib
+    :alt: Build status of the master branch on Windows
+
+.. |codebeat| image:: https://codebeat.co/badges/6a606844-25df-4518-8e1f-3613907fcdb1
+   :target: https://codebeat.co/projects/github-com-oblalex-verboselib-master
+   :alt: Code quality provided by «Codebeat»
+
+.. |codacy| image:: https://api.codacy.com/project/badge/Grade/fae50668a28b48798dd81975deb256d7
+   :target: https://app.codacy.com/gh/oblalex/verboselib
+   :alt: Code quality provided by «Codacy»
+
+.. |scrutinizer| image:: https://scrutinizer-ci.com/g/oblalex/verboselib/badges/quality-score.png?b=master
+   :target: https://scrutinizer-ci.com/g/oblalex/verboselib/?branch=master
+   :alt: Code quality provided by «Scrutinizer CI»
+
+.. |pypi_package| image:: https://img.shields.io/pypi/v/verboselib
    :target: http://badge.fury.io/py/verboselib/
-.. |PyPi downloads| image::  http://img.shields.io/pypi/dm/verboselib.svg?style=flat
-   :target: https://crate.io/packages/verboselib/
+   :alt: Version of PyPI package
+
+.. |python_versions| image:: https://img.shields.io/badge/Python-3.7,3.8-brightgreen.svg
+   :alt: Supported versions of Python
+
+.. |license| image:: https://img.shields.io/badge/license-MIT-blue.svg
+   :target: https://github.com/oblalex/verboselib/blob/master/LICENSE
+   :alt: MIT license
+
 
 .. _translation in Django: https://docs.djangoproject.com/en/1.7/topics/i18n/translation/
 
-.. _0.2.1: https://github.com/oblalex/verboselib/releases/tag/v0.2.0...v0.2.1
-.. _0.2.0: https://github.com/oblalex/verboselib/releases/tag/v0.1.0...v0.2.0
+.. _1.0.0: https://github.com/oblalex/verboselib/compare/v0.2.1...v1.0.0
+.. _0.2.1: https://github.com/oblalex/verboselib/compare/v0.2.0...v0.2.1
+.. _0.2.0: https://github.com/oblalex/verboselib/compare/v0.1.0...v0.2.0
 .. _0.1.0: https://github.com/oblalex/verboselib/releases/tag/v0.1.0
 
 .. _Django: https://www.djangoproject.com/

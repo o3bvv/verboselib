@@ -2,8 +2,7 @@
 source = verboselib
 omit =
     */tests/*
-    verboselib/bin/*
-    verboselib/management/*
+    verboselib/cli/*
     verboselib/version.py
 
 [report]

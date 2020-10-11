@@ -8,9 +8,7 @@ A library with CLI tools allowing to add i18n and l10n to Python apps and libs w
 |unix_build| |windows_build| |codebeat| |codacy| |scrutinizer|
 
 
-.. raw:: html
-
-  <h2>Contents</h2>
+**Contents**
 
 .. contents::
   :local:
@@ -837,7 +835,7 @@ Changelog
 .. _GNU gettext: https://www.gnu.org/software/gettext/
 .. _Python gettext: https://docs.python.org/3/library/gettext.html
 .. _gettext.GNUTranslations: https://docs.python.org/3/library/gettext.html#the-gnutranslations-class
-.. _keywords: https://www.gnu.org/software/gettext/manual/html_node/Mark-Keywords.html
+.. _keyword: https://www.gnu.org/software/gettext/manual/html_node/Mark-Keywords.html
 .. _thread-local: https://docs.python.org/3/library/threading.html#thread-local-data
 
 .. _rlock: https://docs.python.org/3/library/threading.html#rlock-objects

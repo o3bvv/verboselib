@@ -1,6 +1,8 @@
 import gettext as _gettext
 import threading
 
+from pathlib import Path
+
 from typing import Callable
 from typing import Text
 from typing import Union
@@ -11,15 +13,16 @@ from verboselib.lazy import LazyString
 from verboselib.utils import export
 
 
+StringOrPath = Union[Text, Path]
 MaybeLazyInteger = Union[int, Callable[[], int]]
 
 
 @export
 class NotThreadSafeTranslations:
 
-  def __init__(self, domain: Text, locale_dir_path: Text):
+  def __init__(self, domain: Text, locale_dir_path: StringOrPath):
     self._domain = domain
-    self._locale_dir_path = locale_dir_path
+    self._locale_dir_path = str(locale_dir_path)
     self._translations = {
       None: _gettext.NullTranslations(),
     }
@@ -90,7 +93,7 @@ class NotThreadSafeTranslations:
 @export
 class Translations(NotThreadSafeTranslations):
 
-  def __init__(self, domain: Text, locale_dir_path: Text):
+  def __init__(self, domain: Text, locale_dir_path: StringOrPath):
     super().__init__(domain=domain, locale_dir_path=locale_dir_path)
     self._lock = threading.RLock()
 

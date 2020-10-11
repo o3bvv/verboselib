@@ -16,7 +16,7 @@ class TranslationsTestCase(unittest.TestCase):
     drop_default_language()
     drop_language()
 
-    self.translations = Translations(LOCALE_DOMAIN, str(LOCALE_DIR_PATH))
+    self.translations = Translations(LOCALE_DOMAIN, LOCALE_DIR_PATH)
 
   def test_gettext(self):
     _ = self.translations.gettext

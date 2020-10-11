@@ -20,7 +20,7 @@ class PackageTestCase(unittest.TestCase):
     drop_default_language()
     drop_language()
 
-    self.translations = Translations(LOCALE_DOMAIN, str(LOCALE_DIR_PATH))
+    self.translations = Translations(LOCALE_DOMAIN, LOCALE_DIR_PATH)
 
   def tearDown(self):
     del self.translations

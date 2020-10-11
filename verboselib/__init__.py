@@ -1,3 +1,4 @@
-from verboselib.core import *
-from verboselib.helpers import *
-from verboselib.translations import *
+from .core import *
+from .helpers import *
+from .lazy import *
+from .translations import *

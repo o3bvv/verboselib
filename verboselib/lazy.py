@@ -4,7 +4,10 @@ from typing import Any
 from typing import Callable
 from typing import Text
 
+from .utils import export
 
+
+@export
 class LazyString:
 
   def __init__(self, func: Callable[..., Text], *args, **kwargs):

@@ -35,7 +35,7 @@ Domains of Use
 
 The primary domain of use is applications & services. However, it can also be used in libraries.
 
-In such a case users of a target library will have to be aware of using ``verboselib`` as well. Hence, ``verboselib`` can be viewed as a i18n & l10n framework.
+In such case users of a target library will have to be aware of using ``verboselib`` as well. Hence, ``verboselib`` can be viewed as an i18n & l10n framework.
 
 Generally, reliance on frameworks is a thing to refrain from in stand-alone public libraries, but it can also be a totally valid design decision for auxiliary libraries at a product-level scale.
 
@@ -59,7 +59,7 @@ The following examples provide a quick overview of what usage of ``verboselib`` 
 Brief Example
 ~~~~~~~~~~~~~
 
-The most brief usage example shows how to get immediate translations:
+The briefest usage example shows how to get immediate translations:
 
 .. code-block:: python
 
@@ -82,8 +82,8 @@ The most brief usage example shows how to get immediate translations:
 And here is the explanation for the noted lines:
 
 #. Import ``Translations`` class, which is a translations registry.
-#. Import ``set_language()`` function, which allows to switch between languages.
-#. Create an instance of ``Translations`` class, specifying messages domain and location of translations catalogs directory.
+#. Import ``set_language()`` function, which allows switching between languages.
+#. Create an instance of ``Translations`` class, specifying the messages domain and location of the translations catalogs directory.
 #. Define ``_`` as a shortcut for ``translations.gettext()`` function.
 #. Set the current language to English.
 #. Print a ``Hi there!`` there message passed as an argument to the ``_`` function. This gives ``Hi there!`` as the output.
@@ -108,7 +108,7 @@ The example is naïve, but calls to ``gettext()`` via the ``_`` shortcut are ver
 Lazy Translations Example
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Oftentimes there's a need to have a placeholder or just a message, definition of which must be separated from its evaluation. This is achieved via lazy translations:
+Oftentimes there's a need to have a placeholder or just a message, the definition of which must be separated from its evaluation. This is achieved via lazy translations:
 
 .. code-block:: python
 
@@ -165,7 +165,7 @@ There are several aspects to consider when using ``verboselib``:
 #. Tools for extracting messages and compiling translations.
 
 
-Sections below describe those aspects separately.
+The sections below describe those aspects separately.
 
 
 Active Language
@@ -173,7 +173,7 @@ Active Language
 
 Active language is the language which will be used for getting final values of translatable strings.
 
-Its **current value** is a string defined by user, e.g. "en". The value can be missing, i.e. not set.
+Its **current value** is a string defined by a user, e.g. "en". The value can be missing, i.e. not set.
 
 In addition to the current value, it is possible to define a **default value**. So, if the current value is not set, it will fallback to the default value.
 
@@ -198,7 +198,7 @@ The current language in ``verboselib`` is controlled and queried via the followi
 
 
 ``get_language()``
-  Queries name of the current language in the current thread as string.
+  Queries name of the current language in the current thread as a string.
 
   .. code-block:: python
 
@@ -212,7 +212,7 @@ The current language in ``verboselib`` is controlled and queried via the followi
 
 
 ``drop_language()``
-  Removes value of the current language for the current thread. The value will fallback to the default value.
+  Removes the value of the current language for the current thread. The value will fallback to the default value.
 
   .. code-block:: python
 
@@ -243,7 +243,7 @@ The default language is controlled by functions which are similar to functions u
 
 
 ``get_default_language``
-  Queries value of the default language for the current thread as string.
+  Queries value of the default language for the current thread as a string.
 
   .. code-block:: python
 
@@ -257,7 +257,7 @@ The default language is controlled by functions which are similar to functions u
 
 
 ``drop_default_language``
-  Removes value of the default language for the current thread.
+  Removes the value of the default language for the current thread.
 
   .. code-block:: python
 
@@ -353,7 +353,7 @@ The ``verboselib.Translations`` class requires the following arguments to be pro
   A name (``string``) of the domain of translations. Usually, it's the name of the application, of the library, or it can be just ``"messages"``.
 
 ``locale_dir_path``
-  A path (``string`` or ``pathlib.Path``) to the translations catalogs directory, which is a place where actual translations are stored. Usually, such directory is called ``locale`` and is located inside the top-level directory of the application of library. The path is strongly recommended to be absolute.
+  A path (``string`` or ``pathlib.Path``) to the translations catalogs directory, which is a place where actual translations are stored. Usually, such directory is called ``locale`` and is located inside the top-level directory of the application or library. The path is strongly recommended to be absolute.
 
 
 Example:
@@ -441,7 +441,7 @@ As for ``ngettext`` and ``npgettext`` methods and their lazy counterparts, not o
 Translations Catalogs Directory
 -------------------------------
 
-All translations are stored in a catalogs directory, where each language has own subdirectory.
+All translations are stored in a catalogs directory, where each language has its own subdirectory.
 
 This section describes how to build such a catalog.
 
@@ -475,7 +475,7 @@ Discovery of Translatable Messages
 
 In order to be discovered and extracted, messages in source files have to be marked in a certain way.
 
-This is achieved by wrapping a message by a pair of parenthesis ``()`` prefixed by a `keyword`_. This makes it look like a function call, which it really is:
+This is achieved by wrapping a message by a pair of parentheses ``()`` prefixed by a `keyword`_. This makes it look like a function call, which it really is:
 
 .. code-block:: python
 
@@ -542,7 +542,7 @@ Message Contexts
 
 Functions as ``pgettext()``, ``npgettext()``, and their lazy fellows allow to provide a message context.
 
-This is just a string which will appear in ``.po`` files to give a hint for translators about meaning of the message.
+This is just a string which will appear in ``.po`` files to give a hint for translators about the meaning of the message.
 
 For example, the following call to ``pgettext``:
 
@@ -582,9 +582,9 @@ In this trivial example ``n`` is ``1``. However, it can be a variable or a param
   N_("user online", "users online", get_users_online)
 
 
-This looks pretty simple, but that is not the end of story.
+This looks pretty simple, but that is not the end of the story.
 
-Different languages can have different number of plural forms and each form can have own calculation rules.
+Different languages can have different number of plural forms and each form can have their own calculation rules.
 
 So, in order to make plural forms actually work, each ``.po`` file must include a ``Plural-Forms`` metadata in its header.
 
@@ -749,7 +749,7 @@ Thread-safety
 
 The current and the default languages are `thread-local`_. Hence, the functions for manipulating and querying them, like ``set_language()``, are thread-safe. However, the values have to be set in each thread separately.
 
-As for translations catalog registry, ``verboselib.Translations``, it is also thread-safe, as it relies on `RLocks`__. It's recommended to be used in libraries. However, if the target is an application and it is guaranteed to be single-threaded, it's possible to use a not-thread-safe version:
+As for the translations catalog registry, ``verboselib.Translations``, it is also thread-safe, as it relies on `RLocks`__. It's recommended to be used in libraries. However, if the target is an application and it is guaranteed to be single-threaded, it's possible to use a not-thread-safe version:
 
 .. code-block:: python
 
@@ -759,7 +759,7 @@ As for translations catalog registry, ``verboselib.Translations``, it is also th
 Changelog
 ---------
 
-* `1.0.0`_ (draft)
+* `1.0.0`_ (Oct 11, 2020)
 
   API changes:
 

@@ -2,13 +2,11 @@ import argparse
 
 from pathlib import Path
 
-from typing import Callable
 from typing import Iterable
 from typing import List
 from typing import Optional
 from typing import Set
 from typing import Text
-from typing import Type
 
 try:
   from typing import Literal
@@ -29,7 +27,6 @@ from .gettext_tools import validate_gettext_tools_exist
 from .paths import ensure_dir_exists
 from .paths import find_source_files_paths
 from .paths import get_names_of_immediate_subdirectories
-from .paths import make_messages_dir_path
 from .paths import make_po_file_path
 from .paths import make_pot_file_path
 
@@ -229,7 +226,7 @@ class ExtractCommandExecutor(BaseCommandExecutor):
 
   def _make_pot_file(self) -> None:
     if self._verbose:
-      print_out(f"making '.pot' file")
+      print_out("making '.pot' file")
 
     self._maybe_remove_pot_file()
 
@@ -291,7 +288,7 @@ class ExtractCommandExecutor(BaseCommandExecutor):
 
   def _make_all_po_files(self) -> None:
     if self._verbose:
-      print_out(f"making '.po' files")
+      print_out("making '.po' files")
 
     for locale in self._locales:
       self._make_po_file_for_locale(locale=locale)
@@ -363,7 +360,7 @@ class ExtractCommandExecutor(BaseCommandExecutor):
   def _maybe_remove_pot_file(self) -> None:
     if self._pot_file_path.exists():
       if self._verbose:
-        print_out(f"removing '.pot' file")
+        print_out("removing '.pot' file")
 
       self._pot_file_path.unlink()
 

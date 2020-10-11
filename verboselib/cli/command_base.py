@@ -1,7 +1,6 @@
 import abc
 import argparse
 
-from typing import Callable
 from typing import List
 from typing import Text
 from typing import Type

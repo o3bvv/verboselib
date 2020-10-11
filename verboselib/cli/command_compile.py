@@ -2,11 +2,9 @@ import argparse
 
 from pathlib import Path
 
-from typing import Callable
 from typing import List
 from typing import Optional
 from typing import Text
-from typing import Type
 
 from .command_base import BaseCommand
 from .command_base import BaseCommandExecutor

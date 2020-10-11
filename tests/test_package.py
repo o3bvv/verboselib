@@ -1,7 +1,5 @@
 import unittest
 
-from pathlib import Path
-
 from verboselib import drop_default_language
 from verboselib import drop_language
 from verboselib import get_default_language

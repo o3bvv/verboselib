@@ -292,24 +292,24 @@ At certain times it can be useful to disable translations, for example, during d
 
 This can be done via ``set_language_bypass()`` function. It disables the current language and prevents it from falling back to the default language.
 
-  .. code-block:: python
+.. code-block:: python
 
-    from verboselib import drop_language
-    from verboselib import get_language
-    from verboselib import set_language
-    from verboselib import set_default_language
-    from verboselib import set_language_bypass
+  from verboselib import drop_language
+  from verboselib import get_language
+  from verboselib import set_language
+  from verboselib import set_default_language
+  from verboselib import set_language_bypass
 
-    set_default_language("en")
+  set_default_language("en")
 
-    set_language("fr")
-    get_language()              # 'fr'
+  set_language("fr")
+  get_language()              # 'fr'
 
-    set_language_bypass()
-    get_language()              # None
+  set_language_bypass()
+  get_language()              # None
 
-    drop_language()
-    get_language()              # 'en'
+  drop_language()
+  get_language()              # 'en'
 
 
 Note that the 2nd call to ``get_language()`` returned ``None``.

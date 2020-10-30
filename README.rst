@@ -757,6 +757,10 @@ As for the translations catalog registry, ``verboselib.Translations``, it is als
 Changelog
 ---------
 
+* `1.0.1`_ (Oct 30, 2020)
+
+  * Fix ``verboselib.utils.export()`` helper which adds objects to ``__all__`` variable of their own modules.
+
 * `1.0.0`_ (Oct 11, 2020)
 
   API changes:
@@ -841,6 +845,7 @@ Changelog
 .. _rlock: https://docs.python.org/3/library/threading.html#rlock-objects
 __ rlock_
 
+.. _1.0.1: https://github.com/oblalex/verboselib/compare/v1.0.0...v1.0.1
 .. _1.0.0: https://github.com/oblalex/verboselib/compare/v0.2.1...v1.0.0
 .. _0.2.1: https://github.com/oblalex/verboselib/compare/v0.2.0...v0.2.1
 .. _0.2.0: https://github.com/oblalex/verboselib/compare/v0.1.0...v0.2.0

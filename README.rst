@@ -816,7 +816,7 @@ Changelog
    :target: https://codebeat.co/projects/github-com-oblalex-verboselib-master
    :alt: Code quality provided by «Codebeat»
 
-.. |codacy| image:: https://api.codacy.com/project/badge/Grade/fae50668a28b48798dd81975deb256d7
+.. |codacy| image:: https://app.codacy.com/project/badge/Grade/2e1b914f5ff741e2bf57605059f36485
    :target: https://www.codacy.com/gh/oblalex/verboselib/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=oblalex/verboselib&amp;utm_campaign=Badge_Grade
    :alt: Code quality provided by «Codacy»
 

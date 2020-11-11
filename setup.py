@@ -36,7 +36,7 @@ def maybe_get_current_commit_hash() -> Optional[Text]:
   return maybe_get_shell_output("git rev-parse --short HEAD")
 
 
-def parse_requirements(file_path: Path) -> Tuple[List[Text], List[Text]]:
+def parse_requirements(file_path: Path) -> Tuple[List[str], List[str]]:
   requirements, dependencies = list(), list()
 
   with file_path.open("rt") as f:
@@ -46,17 +46,19 @@ def parse_requirements(file_path: Path) -> Tuple[List[Text], List[Text]]:
       if not line or line.startswith("#"):
         continue
 
-      if line.startswith("-e"):
-        line = line.split(" ", 1)[1]
+      if "://" in line:
         dependencies.append(line)
+
         line = line.split("#egg=", 1)[1]
         requirements.append(line)
+
       elif line.startswith("-r"):
         name = Path(line.split(" ", 1)[1])
         path = file_path.parent / name
         subrequirements, subdependencies = parse_requirements(path)
         requirements.extend(subrequirements)
         dependencies.extend(subdependencies)
+
       else:
         requirements.append(line)
 

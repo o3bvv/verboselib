@@ -828,7 +828,7 @@ Changelog
    :target: http://badge.fury.io/py/verboselib/
    :alt: Version of PyPI package
 
-.. |python_versions| image:: https://img.shields.io/badge/Python-3.7,3.8-brightgreen.svg
+.. |python_versions| image:: https://img.shields.io/badge/Python-3.7+-brightgreen.svg
    :alt: Supported versions of Python
 
 .. |license| image:: https://img.shields.io/badge/license-MIT-blue.svg

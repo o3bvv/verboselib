@@ -1,4 +1,4 @@
-import inspect
+import sys
 
 from typing import Any
 
@@ -10,8 +10,7 @@ def export(target: Any) -> Any:
   Simplifies tracking of objects available via wildcard imports.
 
   """
-  frm = inspect.stack()[1]
-  mod = inspect.getmodule(frm[0])
+  mod = sys.modules[target.__module__]
 
   __all__ = getattr(mod, '__all__', None)
 

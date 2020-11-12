@@ -5,7 +5,7 @@ A library with CLI tools allowing to add i18n and l10n to Python apps and libs w
 
 |pypi_package| |python_versions| |license|
 
-|unix_build| |windows_build| |codebeat| |codacy| |scrutinizer|
+|linux_build| |windows_build| |coverage| |codebeat| |codacy| |scrutinizer|
 
 
 **Contents**
@@ -805,12 +805,28 @@ Changelog
   Initial version.
 
 
-.. |unix_build| image:: https://img.shields.io/travis/oblalex/verboselib
+.. |pypi_package| image:: https://img.shields.io/pypi/v/verboselib
+   :target: http://badge.fury.io/py/verboselib/
+   :alt: Version of PyPI package
+
+.. |python_versions| image:: https://img.shields.io/badge/Python-3.7+-brightgreen.svg
+   :alt: Supported versions of Python
+
+.. |license| image:: https://img.shields.io/badge/license-MIT-blue.svg
+   :target: https://github.com/oblalex/verboselib/blob/master/LICENSE
+   :alt: MIT license
+
+.. |linux_build| image:: https://img.shields.io/travis/oblalex/verboselib
    :target: https://travis-ci.org/oblalex/verboselib
+   :alt: Build status of the master branch on Linux
 
 .. |windows_build| image:: https://ci.appveyor.com/api/projects/status/bdm3jnvuka1qjcm1/branch/master?svg=true
-    :target: https://ci.appveyor.com/project/oblalex/verboselib
-    :alt: Build status of the master branch on Windows
+   :target: https://ci.appveyor.com/project/oblalex/verboselib
+   :alt: Build status of the master branch on Windows
+
+.. |coverage| image:: https://scrutinizer-ci.com/g/oblalex/verboselib/badges/coverage.png?b=master
+   :target: https://scrutinizer-ci.com/g/oblalex/verboselib/?branch=master
+   :alt: Code coverage
 
 .. |codebeat| image:: https://codebeat.co/badges/6a606844-25df-4518-8e1f-3613907fcdb1
    :target: https://codebeat.co/projects/github-com-oblalex-verboselib-master
@@ -823,17 +839,6 @@ Changelog
 .. |scrutinizer| image:: https://scrutinizer-ci.com/g/oblalex/verboselib/badges/quality-score.png?b=master
    :target: https://scrutinizer-ci.com/g/oblalex/verboselib/?branch=master
    :alt: Code quality provided by «Scrutinizer CI»
-
-.. |pypi_package| image:: https://img.shields.io/pypi/v/verboselib
-   :target: http://badge.fury.io/py/verboselib/
-   :alt: Version of PyPI package
-
-.. |python_versions| image:: https://img.shields.io/badge/Python-3.7+-brightgreen.svg
-   :alt: Supported versions of Python
-
-.. |license| image:: https://img.shields.io/badge/license-MIT-blue.svg
-   :target: https://github.com/oblalex/verboselib/blob/master/LICENSE
-   :alt: MIT license
 
 
 .. _GNU gettext: https://www.gnu.org/software/gettext/

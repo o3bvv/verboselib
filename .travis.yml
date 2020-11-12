@@ -11,5 +11,7 @@ install:
   - pip install .
 script:
   - py.test --verbose ./verboselib ./tests --cov ./verboselib ./tests
+after_success:
+  - ocular --data-file ".coverage" --config-file ".coveragerc"
 notifications:
   email: false

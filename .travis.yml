@@ -1,5 +1,5 @@
 os:
-  - 'linux'
+  - "linux"
 sudo: false
 language: python
 python:
@@ -8,10 +8,8 @@ python:
   - "3.9"
 install:
   - pip install -r ./requirements/ci.txt
-  - pip install --upgrade --editable .
+  - pip install .
 script:
   - py.test --verbose ./verboselib ./tests --cov ./verboselib ./tests
-after_success:
-  - codecov
 notifications:
   email: false

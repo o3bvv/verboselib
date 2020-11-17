@@ -1,9 +1,8 @@
 import threading
 
 from typing import Optional
-from typing import Text
 
-from verboselib.utils import export
+from ._utils import export
 
 
 _bypass_value  = "__bypass__"
@@ -11,12 +10,12 @@ _local_storage = threading.local()
 
 
 @export
-def get_default_language() -> Optional[Text]:
+def get_default_language() -> Optional[str]:
   return getattr(_local_storage, "default_value", None)
 
 
 @export
-def set_default_language(value: Optional[Text]) -> None:
+def set_default_language(value: Optional[str]) -> None:
   setattr(_local_storage, "default_value", value)
 
 
@@ -26,7 +25,7 @@ def drop_default_language() -> None:
 
 
 @export
-def set_language(value: Optional[Text]) -> None:
+def set_language(value: Optional[str]) -> None:
   setattr(_local_storage, "current_value", value)
 
 
@@ -41,7 +40,7 @@ def drop_language() -> None:
 
 
 @export
-def get_language() -> Optional[Text]:
+def get_language() -> Optional[str]:
   language = getattr(_local_storage, "current_value", None)
 
   if language is _bypass_value:

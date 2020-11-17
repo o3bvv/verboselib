@@ -1,9 +1,13 @@
 import abc
 import argparse
+import sys
 
-from typing import List
-from typing import Text
-from typing import Type
+if sys.version_info >= (3, 9):
+  List = list
+  Type = type
+else:
+  from typing import List
+  from typing import Type
 
 from .lang import classproperty_readonly
 from .utils import print_out
@@ -27,11 +31,11 @@ class BaseCommandExecutor(abc.ABC):
 class BaseCommand(abc.ABC):
 
   @classproperty_readonly
-  def name(self) -> Text:
+  def name(self) -> str:
     raise NotImplementedError
 
   @classproperty_readonly
-  def aliases(self) -> List[Text]:
+  def aliases(self) -> List[str]:
     return []
 
   @classproperty_readonly

@@ -1,14 +1,8 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-09 21:24+0300\n"
+"POT-Creation-Date: 2020-11-18 00:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,14 +12,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1\n"
 
-#: test_package.py:35 test_package.py:39 test_package.py:43 test_package.py:49
-#: test_package.py:53 test_package.py:57 test_package.py:61 test_package.py:65
-#: test_package.py:76 test_package.py:82 test_package.py:86 test_package.py:94
+#: test_package.py:33 test_package.py:37 test_package.py:41 test_package.py:47
+#: test_package.py:51 test_package.py:55 test_package.py:59 test_package.py:63
+#: test_package.py:74 test_package.py:80 test_package.py:84 test_package.py:92
 #: test_translations.py:26 test_translations.py:35
 msgid "verboselib test string"
 msgstr "verboselib test string in en_GB"
 
-#: test_package.py:105
+#: test_package.py:103
 msgid "Good morning, {:}!"
 msgstr ""
 

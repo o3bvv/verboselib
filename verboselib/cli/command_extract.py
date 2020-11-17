@@ -1,18 +1,25 @@
 import argparse
+import sys
 
-from pathlib import Path
+if sys.version_info >= (3, 9):
+  from collections.abc import Iterable
 
-from typing import Iterable
-from typing import List
-from typing import Optional
-from typing import Set
-from typing import Text
+  List = list
+  Set  = set
 
-try:
+else:
+  from typing import Iterable
+  from typing import List
+  from typing import Set
+
+if sys.version_info >= (3, 8):
   from typing import Literal
   MODE = Literal["w", "a"]
-except ImportError:
-  MODE = Text
+else:
+  MODE = str
+
+from pathlib import Path
+from typing import Optional
 
 from .command_base import BaseCommand
 from .command_base import BaseCommandExecutor
@@ -82,9 +89,9 @@ class ExtractCommandExecutor(BaseCommandExecutor):
 
   @staticmethod
   def _handle_keywords(
-    keywords: Optional[Iterable[Text]]=None,
+    keywords: Optional[Iterable[str]]=None,
     no_defaults: bool=False,
-  ) -> List[Text]:
+  ) -> List[str]:
 
     keywords = (
       list(keywords)
@@ -99,9 +106,9 @@ class ExtractCommandExecutor(BaseCommandExecutor):
 
   @staticmethod
   def _handle_extensions(
-    extensions: Optional[Iterable[Text]]=None,
-    ignored: Optional[Iterable[Text]]=None,
-  ) -> Set[Text]:
+    extensions: Optional[Iterable[str]]=None,
+    ignored: Optional[Iterable[str]]=None,
+  ) -> Set[str]:
 
     extensions = (
       list(extensions)
@@ -134,9 +141,9 @@ class ExtractCommandExecutor(BaseCommandExecutor):
 
   @staticmethod
   def _handle_ignore_patterns(
-    ignore_patterns: Optional[Iterable[Text]]=None,
+    ignore_patterns: Optional[Iterable[str]]=None,
     no_defaults: bool=False,
-  ) -> List[Text]:
+  ) -> List[str]:
 
     ignore_patterns = (
       list(ignore_patterns)
@@ -150,13 +157,13 @@ class ExtractCommandExecutor(BaseCommandExecutor):
     return list(sorted(set(ignore_patterns)))
 
   @staticmethod
-  def _validate_domain(domain: Optional[Text]) -> None:
+  def _validate_domain(domain: Optional[str]) -> None:
     if not domain:
       print_err(f"invalid domain value: '{domain}'")
       show_usage_error_and_halt()
 
   @staticmethod
-  def _handle_locales_dir_path(path: Text) -> Path:
+  def _handle_locales_dir_path(path: str) -> Path:
     return Path(path).absolute()
 
   @staticmethod
@@ -170,10 +177,10 @@ class ExtractCommandExecutor(BaseCommandExecutor):
 
   @staticmethod
   def _handle_locales(
-    locales: Optional[List[Text]],
+    locales: Optional[List[str]],
     process_all: bool,
     locales_dir_path: Path,
-  ) -> List[Text]:
+  ) -> List[str]:
 
     if locales:
       return flatten_comma_separated_values(locales)
@@ -183,7 +190,7 @@ class ExtractCommandExecutor(BaseCommandExecutor):
       return []
 
   @staticmethod
-  def _validate_locales(locales: List[Text]) -> None:
+  def _validate_locales(locales: List[str]) -> None:
     if not locales:
       print_err(
         "specify at least 1 locale or specify processing of all existing locales"
@@ -275,7 +282,7 @@ class ExtractCommandExecutor(BaseCommandExecutor):
       mode="w",
     )
 
-  def _extract_unique_messages(self) -> Text:
+  def _extract_unique_messages(self) -> str:
     if self._verbose:
       print_out("extracting unique messages from '.pot' file")
 
@@ -293,7 +300,7 @@ class ExtractCommandExecutor(BaseCommandExecutor):
     for locale in self._locales:
       self._make_po_file_for_locale(locale=locale)
 
-  def _make_po_file_for_locale(self, locale: Text) -> None:
+  def _make_po_file_for_locale(self, locale: str) -> None:
     if self._verbose:
       print_out(f"processing locale '{locale}'")
 
@@ -319,7 +326,7 @@ class ExtractCommandExecutor(BaseCommandExecutor):
     if self._no_obsolete:
       self._remove_obsolete_translations(po_file_path)
 
-  def _merge_new_and_existing_translations(self, po_file_path: Path) -> Text:
+  def _merge_new_and_existing_translations(self, po_file_path: Path) -> str:
     if self._verbose:
       print_out("merging existing and new messages")
 
@@ -345,7 +352,7 @@ class ExtractCommandExecutor(BaseCommandExecutor):
   def _write_translations_file(
     self,
     file_path: Path,
-    content=Text,
+    content=str,
     mode=MODE,
   ) -> None:
 

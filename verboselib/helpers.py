@@ -1,4 +1,4 @@
-from verboselib.utils import export
+from ._utils import export
 
 
 @export

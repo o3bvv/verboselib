@@ -1,11 +1,15 @@
 import fnmatch
 import os
+import sys
+
+if sys.version_info >= (3, 9):
+  List = list
+  Set  = list
+else:
+  from typing import List
+  from typing import Set
 
 from pathlib import Path
-
-from typing import List
-from typing import Set
-from typing import Text
 
 from .text import stringify_path
 from .utils import print_out
@@ -14,18 +18,18 @@ from .utils import print_out
 MESSAGES_DIR_NAME = "LC_MESSAGES"
 
 
-def make_messages_dir_path(locales_dir_path: Path, locale: Text) -> Path:
+def make_messages_dir_path(locales_dir_path: Path, locale: str) -> Path:
   return locales_dir_path / locale / MESSAGES_DIR_NAME
 
 
-def make_pot_file_path(locales_dir_path: Path, domain: Text) -> Path:
+def make_pot_file_path(locales_dir_path: Path, domain: str) -> Path:
   return locales_dir_path / f"{domain}.pot"
 
 
 def make_po_file_path(
   locales_dir_path: Path,
-  locale: Text,
-  domain: Text,
+  locale: str,
+  domain: str,
 ) -> Path:
 
   messages_dir_path = make_messages_dir_path(locales_dir_path, locale)
@@ -38,7 +42,7 @@ def make_mo_file_path(po_file_path: Path) -> Path:
   return po_file_path.parent / f"{po_file_path.stem}.mo"
 
 
-def get_names_of_immediate_subdirectories(root: Path) -> List[Text]:
+def get_names_of_immediate_subdirectories(root: Path) -> List[str]:
   return [
     node.name
     for node in root.iterdir()
@@ -50,7 +54,7 @@ def ensure_dir_exists(path: Path) -> None:
   path.mkdir(parents=True, exist_ok=True)
 
 
-def is_path_ignored(path: Path, ignore_patterns: List[Text]) -> bool:
+def is_path_ignored(path: Path, ignore_patterns: List[str]) -> bool:
   for pattern in ignore_patterns:
     if fnmatch.fnmatchcase(path.name, pattern):
       return True
@@ -58,7 +62,7 @@ def is_path_ignored(path: Path, ignore_patterns: List[Text]) -> bool:
     return False
 
 
-def normalize_dir_patterns(patterns: List[Text]) -> List[Text]:
+def normalize_dir_patterns(patterns: List[str]) -> List[str]:
   dir_suffix = "{os.sep}*"
   return [
     (
@@ -72,8 +76,8 @@ def normalize_dir_patterns(patterns: List[Text]) -> List[Text]:
 
 def find_source_files_paths(
   root_dir_path: Path,
-  ignore_patterns: List[Text],
-  extensions: Set[Text],
+  ignore_patterns: List[str],
+  extensions: Set[str],
   follow_links: bool,
   verbose: bool,
 ) -> List[Path]:

@@ -143,12 +143,12 @@ Comments for the noted lines:
 #. The method is called and a parameterized translated string is returned.
 
 
-This example is also naïve, but here the value of ``Greeter.greeting_fmt`` is not translated into a solid string during construction of the ``Greeter`` class. This is important, as the class is constructed only once. The actual type of ``greeting_fmt`` is not a string, but ``verboselib.lazy.LazyString``, which is a string's proxy:
+This example is also naïve, but here the value of ``Greeter.greeting_fmt`` is not translated into a solid string during construction of the ``Greeter`` class. This is important, as the class is constructed only once. The actual type of ``greeting_fmt`` is not a string, but ``lazy_string.LazyString``, which is a string's proxy:
 
 .. code-block:: python
 
-  type(Greeter.greeting_fmt)
-  # <class 'verboselib.lazy.LazyString'>
+  >>> type(Greeter.greeting_fmt)
+  <class 'lazy_string.LazyString'>
 
 
 API
@@ -426,7 +426,7 @@ Additionally, ``verboselib.Translations`` provides their lazy versions:
 #. ``npgettext_lazy(context, singular, plural, n)``
 
 
-Those lazy methods return an instance of ``verboselib.lazy.LazyString`` which is a string's proxy.
+Those lazy methods return an instance of ``lazy_string.LazyString`` which is a string's proxy.
 
 As for ``ngettext`` and ``npgettext`` methods and their lazy counterparts, not only an ``int`` can be passed as the ``n`` argument, but also a callable accepting no arguments and returning an ``int``. For example, both the following calls are valid and conceptually identical:
 
@@ -757,6 +757,16 @@ As for the translations catalog registry, ``verboselib.Translations``, it is als
 Changelog
 ---------
 
+* `1.1.0`_ (Nov 18, 2020)
+
+  API changes:
+
+  * ``verboselib.lazy`` is extracted into a standalone lib `lazy-string`_.
+
+  Misc:
+
+  * Annotations using classes from ``typing`` are tidied up and deprecations starting from Python 3.9 are handled.
+
 * `1.0.1`_ (Oct 30, 2020)
 
   * Fix ``verboselib.utils.export()`` helper which adds objects to ``__all__`` variable of their own modules.
@@ -842,10 +852,12 @@ Changelog
 .. _gettext.GNUTranslations: https://docs.python.org/3/library/gettext.html#the-gnutranslations-class
 .. _keyword: https://www.gnu.org/software/gettext/manual/html_node/Mark-Keywords.html
 .. _thread-local: https://docs.python.org/3/library/threading.html#thread-local-data
+.. _lazy-string: https://pypi.org/project/lazy-string/
 
 .. _rlock: https://docs.python.org/3/library/threading.html#rlock-objects
 __ rlock_
 
+.. _1.1.0: https://github.com/oblalex/verboselib/compare/v1.0.1...v1.1.0
 .. _1.0.1: https://github.com/oblalex/verboselib/compare/v1.0.0...v1.0.1
 .. _1.0.0: https://github.com/oblalex/verboselib/compare/v0.2.1...v1.0.0
 .. _0.2.1: https://github.com/oblalex/verboselib/compare/v0.2.0...v0.2.1

@@ -1,13 +1,16 @@
 import itertools
+import sys
+
+if sys.version_info >= (3, 9):
+  List = list
+else:
+  from typing import List
 
 from pathlib import Path
-
-from typing import List
 from typing import Optional
-from typing import Text
 
 
-def normalize_eols(contents: Text) -> Text:
+def normalize_eols(contents: str) -> str:
   lines = contents.splitlines()
 
   # Ensure last line has its EOL
@@ -17,7 +20,7 @@ def normalize_eols(contents: Text) -> Text:
   return "\n".join(lines)
 
 
-def flatten_comma_separated_values(values: Optional[List[Text]]) -> List[Text]:
+def flatten_comma_separated_values(values: Optional[List[str]]) -> List[str]:
   if not values:
     return []
 
@@ -33,5 +36,5 @@ def flatten_comma_separated_values(values: Optional[List[Text]]) -> List[Text]:
   ]))
 
 
-def stringify_path(path: Path) -> Text:
+def stringify_path(path: Path) -> str:
   return str(path.as_posix())

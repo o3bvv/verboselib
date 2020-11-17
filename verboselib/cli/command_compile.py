@@ -1,10 +1,13 @@
 import argparse
+import sys
+
+if sys.version_info >= (3, 9):
+  List = list
+else:
+  from typing import List
 
 from pathlib import Path
-
-from typing import List
 from typing import Optional
-from typing import Text
 
 from .command_base import BaseCommand
 from .command_base import BaseCommandExecutor
@@ -52,7 +55,7 @@ class CompileCommandExecutor(BaseCommandExecutor):
     self._verbose = args.verbose
 
   @staticmethod
-  def _handle_locales_dir_path(path: Text) -> Path:
+  def _handle_locales_dir_path(path: str) -> Path:
     return Path(path).absolute()
 
   @staticmethod
@@ -67,9 +70,9 @@ class CompileCommandExecutor(BaseCommandExecutor):
 
   @staticmethod
   def _handle_locales(
-    locales: Optional[List[Text]],
+    locales: Optional[List[str]],
     locales_dir_path: Path,
-  ) -> List[Text]:
+  ) -> List[str]:
 
     if locales:
       return flatten_comma_separated_values(locales)
@@ -78,7 +81,7 @@ class CompileCommandExecutor(BaseCommandExecutor):
 
   @staticmethod
   def _validate_locales(
-    locales: List[Text],
+    locales: List[str],
     locales_dir_path: Path,
   ) -> None:
     if not locales:
@@ -113,7 +116,7 @@ class CompileCommandExecutor(BaseCommandExecutor):
     for locale in final_locales:
       self._process_locale(locale=locale)
 
-  def _process_locale(self, locale: Text) -> None:
+  def _process_locale(self, locale: str) -> None:
     if self._verbose:
       print_out(f"processing locale '{locale}'")
 

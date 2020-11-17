@@ -3,21 +3,28 @@ import os
 import subprocess
 import sys
 
-from typing import Callable
-from typing import List
+if sys.version_info >= (3, 9):
+  from collections.abc import Callable
+
+  List  = list
+  Tuple = tuple
+
+else:
+  from typing import Callable
+  from typing import List
+  from typing import Tuple
+
 from typing import Optional
-from typing import Text
-from typing import Tuple
 
 
 ERROR_CODE = -1
 
 
 def find_executable(
-  name:    Text,
-  path:    Optional[Text]=None,
-  pathext: Optional[Text]=None,
-) -> Optional[Text]:
+  name:    str,
+  path:    Optional[str]=None,
+  pathext: Optional[str]=None,
+) -> Optional[str]:
 
   if path is None:
     path = os.environ.get("PATH", "").split(os.pathsep)
@@ -50,7 +57,7 @@ def find_executable(
   return None
 
 
-def popen_wrapper(args: List[Text]) -> Tuple[Text, Text, int]:
+def popen_wrapper(args: List[str]) -> Tuple[str, str, int]:
   """
   Friendly wrapper for Popen.
 
@@ -86,10 +93,10 @@ def show_usage_error_and_halt() -> None:
   halt()
 
 
-def _wrap_writer(writer: Callable[[Text], None]) -> Callable[[Text], None]:
+def _wrap_writer(writer: Callable[[str], None]) -> Callable[[str], None]:
 
   @functools.wraps(writer)
-  def wrapped(s: Text) -> None:
+  def wrapped(s: str) -> None:
     writer(f"{s}\n")
 
   return wrapped

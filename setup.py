@@ -1,15 +1,21 @@
 import itertools
 import os
 import shlex
+import sys
+
+if sys.version_info >= (3, 9):
+  List  = list
+  Tuple = tuple
+else:
+  from typing import List
+  from typing import Tuple
 
 from pathlib import Path
+
 from setuptools import setup
 from subprocess import check_output
 
-from typing import List
 from typing import Optional
-from typing import Text
-from typing import Tuple
 
 
 __here__ = Path(__file__).absolute().parent
@@ -19,7 +25,7 @@ version_file_path = __here__ / "verboselib" / "version.py"
 exec(compile(version_file_path.read_text(), version_file_path, "exec"))
 
 
-def maybe_get_shell_output(command: Text) -> Text:
+def maybe_get_shell_output(command: str) -> str:
   try:
     args = shlex.split(command)
     with open(os.devnull, "w") as devnull:
@@ -28,11 +34,11 @@ def maybe_get_shell_output(command: Text) -> Text:
     pass
 
 
-def maybe_get_current_branch_name() -> Optional[Text]:
+def maybe_get_current_branch_name() -> Optional[str]:
   return maybe_get_shell_output("git rev-parse --abbrev-ref HEAD")
 
 
-def maybe_get_current_commit_hash() -> Optional[Text]:
+def maybe_get_current_commit_hash() -> Optional[str]:
   return maybe_get_shell_output("git rev-parse --short HEAD")
 
 
@@ -79,10 +85,12 @@ BUILD_TAG = (
 
 REQUIREMENTS_DIR_PATH = __here__ / "requirements"
 
+INSTALL_REQUIREMENTS, INSTALL_DEPENDENCIES = parse_requirements(
+  file_path=(REQUIREMENTS_DIR_PATH / "dist.txt"),
+)
 TEST_REQUIREMENTS, TEST_DEPENDENCIES = parse_requirements(
   file_path=(REQUIREMENTS_DIR_PATH / "test.txt"),
 )
-
 
 setup(
   name="verboselib",
@@ -111,8 +119,10 @@ setup(
 
   python_requires=">=3.7",
   dependency_links=list(set(itertools.chain(
+    INSTALL_DEPENDENCIES,
     TEST_DEPENDENCIES,
   ))),
+  install_requires=INSTALL_REQUIREMENTS,
   tests_require=TEST_REQUIREMENTS,
   test_suite="tests",
 

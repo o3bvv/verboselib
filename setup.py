@@ -1,14 +1,11 @@
-import itertools
 import os
 import shlex
 import sys
 
 if sys.version_info >= (3, 9):
   List  = list
-  Tuple = tuple
 else:
   from typing import List
-  from typing import Tuple
 
 from pathlib import Path
 from setuptools import setup
@@ -40,45 +37,32 @@ def maybe_get_current_commit_hash() -> Optional[str]:
   return maybe_get_shell_output("git rev-parse --short HEAD")
 
 
-def parse_requirements(file_path: Path) -> Tuple[List[str], List[str]]:
-  requirements, dependencies = list(), list()
+def parse_requirements(file_path: Path) -> List[str]:
+  requirements = list()
 
   if not file_path.exists():
-    return requirements, dependencies
+    return requirements
 
   with file_path.open("rt") as f:
     for line in f:
       line = line.strip()
 
-      # check if is comment or empty
+      # check if comment or empty
       if not line or line.startswith("#"):
         continue
-
-      # check if is URL
-      if "://" in line:
-        dependencies.append(line)
-
-        egg = line.split("#egg=", 1)[1]
-
-        # check if version is specified
-        if "-" in egg:
-          egg = egg.rsplit("-", 1)[0]
-
-        requirements.append(egg)
 
       # check if is inclusion of other requirements file
       elif line.startswith("-r"):
         name = Path(line.split(" ", 1)[1])
         path = file_path.parent / name
-        subrequirements, subdependencies = parse_requirements(path)
+        subrequirements = parse_requirements(path)
         requirements.extend(subrequirements)
-        dependencies.extend(subdependencies)
 
-      # assume is a standard requirement
+      # assume standard requirement
       else:
         requirements.append(line)
 
-  return requirements, dependencies
+  return requirements
 
 
 README = (__here__ / "README.rst").read_text()
@@ -95,15 +79,9 @@ BUILD_TAG = (
 
 REQUIREMENTS_DIR_PATH = __here__ / "requirements"
 
-INSTALL_REQUIREMENTS, INSTALL_DEPENDENCIES = parse_requirements(
-  file_path=(REQUIREMENTS_DIR_PATH / "dist.txt"),
-)
-SETUP_REQUIREMENTS, SETUP_DEPENDENCIES = parse_requirements(
-  file_path=(REQUIREMENTS_DIR_PATH / "setup.txt"),
-)
-TEST_REQUIREMENTS, TEST_DEPENDENCIES = parse_requirements(
-  file_path=(REQUIREMENTS_DIR_PATH / "test.txt"),
-)
+INSTALL_REQUIREMENTS = parse_requirements(REQUIREMENTS_DIR_PATH / "dist.txt")
+SETUP_REQUIREMENTS   = parse_requirements(REQUIREMENTS_DIR_PATH / "setup.txt")
+TEST_REQUIREMENTS    = parse_requirements(REQUIREMENTS_DIR_PATH / "test.txt")
 
 setup(
   name="verboselib",
@@ -131,11 +109,6 @@ setup(
   },
 
   python_requires=">=3.7",
-  dependency_links=list(set(itertools.chain(
-    INSTALL_DEPENDENCIES,
-    SETUP_DEPENDENCIES,
-    TEST_DEPENDENCIES,
-  ))),
   install_requires=INSTALL_REQUIREMENTS,
   setup_requires=SETUP_REQUIREMENTS,
   tests_require=TEST_REQUIREMENTS,
